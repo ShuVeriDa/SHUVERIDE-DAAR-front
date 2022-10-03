@@ -1,14 +1,18 @@
 import {FC} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 import logoSvg from '../assets/img/pizza-logo.svg'
 import {Search} from "./Search/Search";
+import {useAppSelector} from "../redux/store";
 
 
 type HeaderPropsType = {}
 
 export const Header: FC<HeaderPropsType> = () => {
+  const {items, totalPrice} = useAppSelector(state => state.cart)
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
+  const location = useLocation()
    return (
       <div className="header">
          <div className="container">
@@ -20,11 +24,11 @@ export const Header: FC<HeaderPropsType> = () => {
                </div>
             </Link>
 
-             <Search />
+           {location.pathname !== '/cart' && <Search />}
             <div className="headerCart">
-
+              {location.pathname !== '/cart' &&
                    <Link to="/cart" className="button buttonCart">
-                       <span>totalPrice ₽</span>
+                       <span>{totalPrice} ₽</span>
                        <div className="buttonDelimiter"></div>
                        <svg
                            width="18"
@@ -55,9 +59,9 @@ export const Header: FC<HeaderPropsType> = () => {
                                strokeLinejoin="round"
                            />
                        </svg>
-                       <span>totalCount</span>
+                       <span>{totalCount}</span>
                    </Link>
-
+              }
             </div>
          </div>
       </div>
