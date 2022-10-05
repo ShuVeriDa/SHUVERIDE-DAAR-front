@@ -10,6 +10,7 @@ export enum StatusEnum {
 
 const initialState: CartSliceStateType = {
   items: [],
+  item: null,
   status: StatusEnum.IDLE
 }
 
@@ -37,7 +38,7 @@ export const PizzaSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(FetchPizzasTC.pending, (state, action) => {
+      .addCase(FetchPizzasTC.pending, (state) => {
         state.status = StatusEnum.LOADING
         state.items = []
       })
@@ -45,9 +46,21 @@ export const PizzaSlice = createSlice({
         state.status = StatusEnum.SUCCESS
         state.items = action.payload
       })
-      .addCase(FetchPizzasTC.rejected, (state, action) => {
+      .addCase(FetchPizzasTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
         state.items = []
+      })
+      .addCase(FetchOnePizzaTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+        state.item = null
+      })
+      .addCase(FetchOnePizzaTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.item = action.payload
+      })
+      .addCase(FetchOnePizzaTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+        state.item = null
       })
 
   }
@@ -59,6 +72,7 @@ export const pizzaReducer = PizzaSlice.reducer
 //types
 export type CartSliceStateType = {
   items: PizzaResponseType[],
+  item: PizzaResponseType | null
   status: StatusEnum
 }
 
