@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const instance = axios.create({
   baseURL: 'https://630a32f93249910032824d12.mockapi.io/'
@@ -6,9 +6,16 @@ const instance = axios.create({
 
 
 export const pizzaAPI = {
-  getPizza: () => {
-    return instance.get<PizzaResponseType[]>('items')
+  getPizzas: (params: SearchPizzasParamsType) => {
+    return instance.get<PizzaResponseType[]>(`items?${params.category}`)
+  },
+  getOnePizza: (id: string) => {
+    return instance.get<PizzaResponseType>(`items/${id}`,)
   }
+}
+
+export type SearchPizzasParamsType = {
+  category: string
 }
 
 export type PizzaResponseType = {

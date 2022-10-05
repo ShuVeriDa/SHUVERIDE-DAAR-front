@@ -3,11 +3,13 @@ import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {pizzaReducer} from "./pizza/pizzaSlice";
 import thunkMiddleware from 'redux-thunk'
 import {cartReducer} from "./cart/cartSlice";
+import {filterReducer} from "./filter/filterSlice";
 
 export const store = configureStore({
   reducer: {
     pizza: pizzaReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    filter: filterReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware)
 })
