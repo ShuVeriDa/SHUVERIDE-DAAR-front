@@ -1,16 +1,40 @@
-import {FC, memo} from "react";
+import {FC, memo, useState} from "react";
+import {sortPropertyEnum} from "../redux/pizza/pizzaSlice";
+import {useDispatch} from "react-redux";
+import {AppDispatchType} from "../redux/store";
+import {setSort} from "../redux/filter/filterSlice";
 
 type SortPopupPropsType = {
-
+  sort: SortListType
 }
 
-export const SortPopup: FC<SortPopupPropsType> = memo(() => {
+export type SortListType = {
+  name: string
+  sortProperty: sortPropertyEnum
+}
 
+const sortList: SortListType[] = [
+  {name: "популярности (DESK)", sortProperty: sortPropertyEnum.RATING_DESK},
+  {name: "популярности (ASC)", sortProperty: sortPropertyEnum.RATING_ASC},
+  {name: "цене (DESK)", sortProperty: sortPropertyEnum.PRICE_DESK},
+  {name: "цене (ASC)", sortProperty: sortPropertyEnum.PRICE_ASC},
+  {name: "алфавиту (DESK)", sortProperty: sortPropertyEnum.TITLE_DESK},
+  {name: "алфавиту (ASC)", sortProperty: sortPropertyEnum.TITLE_ASC},
+]
+
+export const SortPopup: FC<SortPopupPropsType> = memo(({sort}) => {
+  const dispatch = useDispatch<AppDispatchType>()
+  const [visible, setVisible] = useState<boolean>(false)
+
+  const onClickCategory = (sortType: SortListType) => {
+    setVisible(false)
+    dispatch(setSort(sortType))
+  }
 
    return (
       <div className="sort">
          <div className="sortLabel">
-            <svg
+            <svg className={visible ? 'svgActive' : ''}
                width="10"
                height="6"
                viewBox="0 0 10 6"
@@ -23,10 +47,16 @@ export const SortPopup: FC<SortPopupPropsType> = memo(() => {
                />
             </svg>
             <b>Сортировка по:</b>
-            <span>популярности</span>
+            <span onClick={() => setVisible(!visible)}>{sort.name}</span>
          </div>
-        <div className="sortPopup">
-         </div>
+        {visible && <div className="sortPopup">
+            <ul>
+              {sortList.map((obj, index) => (
+                <li key={index} onClick={() => onClickCategory(obj)}>{obj.name}</li>
+              ))}
+            </ul>
+        </div>}
+
 
       </div>
    );

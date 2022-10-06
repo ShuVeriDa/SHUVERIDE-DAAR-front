@@ -1,4 +1,5 @@
 import axios from "axios";
+import {SortListType} from "../components/SortPopup";
 
 const instance = axios.create({
   baseURL: 'https://630a32f93249910032824d12.mockapi.io/'
@@ -7,7 +8,7 @@ const instance = axios.create({
 
 export const pizzaAPI = {
   getPizzas: (params: SearchPizzasParamsType) => {
-    return instance.get<PizzaResponseType[]>(`items?${params.category}`)
+    return instance.get<PizzaResponseType[]>(`items?${params.category}&sortBy=${params.sortBy}`)
   },
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
@@ -16,6 +17,7 @@ export const pizzaAPI = {
 
 export type SearchPizzasParamsType = {
   category: string
+  sortBy: string
 }
 
 export type PizzaResponseType = {

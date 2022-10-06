@@ -30,7 +30,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
          <img src={item.imageUrl} className={styles.image} alt=""/>
          <h2>{item.title}</h2>
          <h4>{item.price} ₽</h4>
-         <Link to='/notfound'>
+         <Link to='/'>
             <button className="button buttonOutline buttonAdd">
                <span>Назад</span>
             </button>

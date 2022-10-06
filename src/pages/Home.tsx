@@ -8,24 +8,24 @@ import {useDispatch} from "react-redux";
 import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
-import {setCategoryId, setFilters} from "../redux/filter/filterSlice";
-import qs from "qs";
-import { useNavigate } from "react-router-dom";
-import {SearchPizzasParamsType} from "../api/pizzaAPI";
+import {setCategoryId} from "../redux/filter/filterSlice";
+import {useNavigate} from "react-router-dom";
 
 type HomePropsType = {}
 
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
   const {items, status} = useAppSelector(state => state.pizza)
-  const {categoryId} = useAppSelector(state => state.filter)
+  const {categoryId, sort} = useAppSelector(state => state.filter)
   const isMounted = useRef(false)
   const navigate = useNavigate()
 
 
   const getPizzas = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
-    dispatch(FetchPizzasTC({category}))
+    const sortBy = sort.sortProperty.replace("-", '')
+
+    dispatch(FetchPizzasTC({category, sortBy}))
   }
 
   // useEffect(() => {
@@ -52,7 +52,7 @@ export const Home: FC<HomePropsType> = () => {
 
   useEffect(() => {
     getPizzas()
-  }, [categoryId])
+  }, [categoryId, sort.sortProperty])
 
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 
@@ -66,7 +66,7 @@ export const Home: FC<HomePropsType> = () => {
     <div className='container'>
       <div className="contentTop">
         <Categories categoryId={categoryId} onClickCategoryId={onClickCategoryId}/>
-        <SortPopup/>
+        <SortPopup sort={sort}/>
       </div>
       <h2 className="contentTitle">Все пиццы</h2>
       {status === 'error'
