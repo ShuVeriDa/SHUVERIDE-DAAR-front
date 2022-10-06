@@ -24,8 +24,9 @@ export const Home: FC<HomePropsType> = () => {
   const getPizzas = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sort.sortProperty.replace("-", '')
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
 
-    dispatch(FetchPizzasTC({category, sortBy}))
+    dispatch(FetchPizzasTC({category, sortBy, order}))
   }
 
   // useEffect(() => {

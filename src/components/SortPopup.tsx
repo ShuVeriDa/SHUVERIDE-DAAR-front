@@ -14,11 +14,11 @@ export type SortListType = {
 }
 
 const sortList: SortListType[] = [
-  {name: "популярности (DESK)", sortProperty: sortPropertyEnum.RATING_DESK},
+  {name: "популярности (DESK)", sortProperty: sortPropertyEnum.RATING_DESC},
   {name: "популярности (ASC)", sortProperty: sortPropertyEnum.RATING_ASC},
-  {name: "цене (DESK)", sortProperty: sortPropertyEnum.PRICE_DESK},
+  {name: "цене (DESK)", sortProperty: sortPropertyEnum.PRICE_DESC},
   {name: "цене (ASC)", sortProperty: sortPropertyEnum.PRICE_ASC},
-  {name: "алфавиту (DESK)", sortProperty: sortPropertyEnum.TITLE_DESK},
+  {name: "алфавиту (DESK)", sortProperty: sortPropertyEnum.TITLE_DESC},
   {name: "алфавиту (ASC)", sortProperty: sortPropertyEnum.TITLE_ASC},
 ]
 
@@ -52,7 +52,12 @@ export const SortPopup: FC<SortPopupPropsType> = memo(({sort}) => {
         {visible && <div className="sortPopup">
             <ul>
               {sortList.map((obj, index) => (
-                <li key={index} onClick={() => onClickCategory(obj)}>{obj.name}</li>
+                <li key={index}
+                    onClick={() => onClickCategory(obj)}
+                    className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
+                >
+                  {obj.name}
+                </li>
               ))}
             </ul>
         </div>}
