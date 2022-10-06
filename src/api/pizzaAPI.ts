@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const pizzaAPI = {
   getPizzas: (params: SearchPizzasParamsType) => {
-    return instance.get<PizzaResponseType[]>(`items?${params.category}&sortBy=${params.sortBy}&order=${params.order}`)
+    return instance.get<PizzaResponseType[]>(`items?${params.category}&sortBy=${params.sortBy}&order=${params.order}&${params.search}`)
   },
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
@@ -19,6 +19,7 @@ export type SearchPizzasParamsType = {
   category: string
   sortBy: string
   order: string
+  search: string
 }
 
 export type PizzaResponseType = {

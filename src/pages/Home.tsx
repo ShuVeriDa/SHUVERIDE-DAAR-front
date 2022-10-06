@@ -16,44 +16,21 @@ type HomePropsType = {}
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
   const {items, status} = useAppSelector(state => state.pizza)
-  const {categoryId, sort} = useAppSelector(state => state.filter)
-  const isMounted = useRef(false)
-  const navigate = useNavigate()
-
+  const {categoryId, sort, searchValue} = useAppSelector(state => state.filter)
 
   const getPizzas = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sort.sortProperty.replace("-", '')
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
+    const search = searchValue ? `search=${searchValue}` : ''
 
-    dispatch(FetchPizzasTC({category, sortBy, order}))
+    dispatch(FetchPizzasTC({category, sortBy, order, search}))
   }
 
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     const queryString = qs.stringify({
-  //       categoryId
-  //     })
-  //
-  //     navigate(`?${queryString}`)
-  //   }
-  //
-  //   isMounted.current = true
-  // }, [categoryId])
-  //
-  // useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = qs.parse(window.location.search.substring(1) as unknown as SearchPizzasParamsType)
-  //
-  //     dispatch(setFilters({
-  //       categoryId: Number(params.category)
-  //     }))
-  //   }
-  // }, [])
 
   useEffect(() => {
     getPizzas()
-  }, [categoryId, sort.sortProperty])
+  }, [categoryId, sort.sortProperty, searchValue])
 
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 

@@ -14,11 +14,11 @@ export type SortListType = {
 }
 
 const sortList: SortListType[] = [
-  {name: "популярности (DESK)", sortProperty: sortPropertyEnum.RATING_DESC},
+  {name: "популярности (DESC)", sortProperty: sortPropertyEnum.RATING_DESC},
   {name: "популярности (ASC)", sortProperty: sortPropertyEnum.RATING_ASC},
-  {name: "цене (DESK)", sortProperty: sortPropertyEnum.PRICE_DESC},
+  {name: "цене (DESC)", sortProperty: sortPropertyEnum.PRICE_DESC},
   {name: "цене (ASC)", sortProperty: sortPropertyEnum.PRICE_ASC},
-  {name: "алфавиту (DESK)", sortProperty: sortPropertyEnum.TITLE_DESC},
+  {name: "алфавиту (DESC)", sortProperty: sortPropertyEnum.TITLE_DESC},
   {name: "алфавиту (ASC)", sortProperty: sortPropertyEnum.TITLE_ASC},
 ]
 
