@@ -8,15 +8,19 @@ import {useDispatch} from "react-redux";
 import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
-import {setCategoryId} from "../redux/filter/filterSlice";
+import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
 import {useNavigate} from "react-router-dom";
+import qs from "qs";
 
 type HomePropsType = {}
 
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
   const {items, status} = useAppSelector(state => state.pizza)
-  const {categoryId, sort, searchValue} = useAppSelector(state => state.filter)
+  const {categoryId, sort, searchValue, currentPage} = useAppSelector(state => state.filter)
+
+  const navigate = useNavigate()
+  const isMounted = useRef(false)
 
   const getPizzas = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
@@ -24,13 +28,29 @@ export const Home: FC<HomePropsType> = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `search=${searchValue}` : ''
 
-    dispatch(FetchPizzasTC({category, sortBy, order, search}))
+    dispatch(FetchPizzasTC({currentPage, category, sortBy, order, search}))
   }
 
+  // Если изменили параметры и был первый рендер
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage
+      })
 
+      navigate(`?${queryString}`)
+    }
+
+    isMounted.current = true
+  }, [categoryId, sort.sortProperty])
+
+
+// Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     getPizzas()
-  }, [categoryId, sort.sortProperty, searchValue])
+  }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 
@@ -40,6 +60,13 @@ export const Home: FC<HomePropsType> = () => {
   const onClickCategoryId = (categoryId: number) => {
     dispatch(setCategoryId(categoryId))
   }
+
+  const onChangeCurrentPage = (page: number) => {
+    dispatch(setCurrentPage(page))
+  }
+
+  console.log(items)
+
   return (
     <div className='container'>
       <div className="contentTop">
@@ -54,7 +81,7 @@ export const Home: FC<HomePropsType> = () => {
         </div>
         : <div className="contentItems">{status === 'loading' ? skeleton : pizzas}</div>
       }
-      <Pagination/>
+      <Pagination currentPage={currentPage} onChangeCurrentPage={onChangeCurrentPage}/>
     </div>
   );
 };

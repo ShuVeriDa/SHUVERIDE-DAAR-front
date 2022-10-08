@@ -13,7 +13,7 @@ export type SortListType = {
   sortProperty: sortPropertyEnum
 }
 
-const sortList: SortListType[] = [
+export const sortList: SortListType[] = [
   {name: "популярности (DESC)", sortProperty: sortPropertyEnum.RATING_DESC},
   {name: "популярности (ASC)", sortProperty: sortPropertyEnum.RATING_ASC},
   {name: "цене (DESC)", sortProperty: sortPropertyEnum.PRICE_DESC},

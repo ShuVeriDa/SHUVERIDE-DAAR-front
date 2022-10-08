@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {SortListType} from "../components/SortPopup";
 
 const instance = axios.create({
@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const pizzaAPI = {
   getPizzas: (params: SearchPizzasParamsType) => {
-    return instance.get<PizzaResponseType[]>(`items?${params.category}&sortBy=${params.sortBy}&order=${params.order}&${params.search}`)
+    return instance.get<PizzaResponseType[]>(`items?page=${params.currentPage}&limit=4&${params.category}&sortBy=${params.sortBy}&order=${params.order}&${params.search}`)
   },
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
@@ -20,6 +20,7 @@ export type SearchPizzasParamsType = {
   sortBy: string
   order: string
   search: string
+  currentPage: number
 }
 
 export type PizzaResponseType = {
