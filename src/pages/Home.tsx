@@ -55,7 +55,8 @@ export const Home: FC<HomePropsType> = () => {
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 
   const skeleton = array.map((_, index) => <Skeleton key={index}/>)
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id}  {...obj}/>)
+  const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
+    .map((obj) => <PizzaBlock key={obj.id}  {...obj}/>)
 
   const onClickCategoryId = (categoryId: number) => {
     dispatch(setCategoryId(categoryId))

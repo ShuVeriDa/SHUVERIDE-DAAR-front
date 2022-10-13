@@ -11,9 +11,9 @@ type FullPizzaPropsType = {}
 
 export const FullPizza: FC<FullPizzaPropsType> = () => {
   const {item} = useAppSelector(state => state.pizza)
-   const dispatch = useDispatch<AppDispatchType>()
-   const {id} = useParams()
-   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatchType>()
+  const {id} = useParams()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -21,20 +21,27 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
   }, [])
 
 
-   if (!item) {
-      return <>Loading...</>
-   }
+  if (!item) {
+    return <>Loading...</>
+  }
 
-   return (
-      <div className='container'>
-         <img src={item.imageUrl} className={styles.image} alt=""/>
-         <h2>{item.title}</h2>
-         <h4>{item.price} ₽</h4>
-         <Link to='/'>
+  return (
+    <div className='container'>
+      <div className={styles.wrapper}>
+        <div className={styles.imgBlock}>
+          <img src={item.imageUrl} className={styles.image} alt=""/>
+        </div>
+        <div className={styles.foodConfigBlock}>
+          <h2>{item.title}</h2>
+          <h4>{item.price} ₽</h4>
+          <Link to='/'>
             <button className="button buttonOutline buttonAdd">
-               <span>Назад</span>
+              <span>Назад</span>
             </button>
-         </Link>
+          </Link>
+        </div>
+
       </div>
-   );
+    </div>
+  );
 };
