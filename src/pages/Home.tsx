@@ -1,16 +1,17 @@
 import React, {FC, useEffect, useRef} from "react";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import qs from "qs";
 
 import {Categories} from "../components/Categories";
 import {SortPopup} from "../components/SortPopup";
 import {Pagination} from "../components/Pagination/Pagination";
 import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
-import {useDispatch} from "react-redux";
 import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
-import {useNavigate} from "react-router-dom";
-import qs from "qs";
+
 
 type HomePropsType = {}
 
