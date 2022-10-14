@@ -3,6 +3,7 @@ import {CommentsResponseType, pizzaAPI} from "../../api/pizzaAPI";
 import uuid from 'react-uuid';
 import {useNavigate} from "react-router-dom";
 import styles from './Comments.module.scss'
+import {CommentItem} from "../CommentItem/CommentItem";
 
 
 interface CommentsPropsType {
@@ -78,11 +79,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
           {
           comments
             .filter(obj => obj.foodId === foodId)
-            .map(obj => {
-             return <div className={styles.commentItem} key={obj.id}>
-                <span>{obj.text}</span>
-              </div>
-            })
+            .map(obj => <CommentItem key={obj.id} {...obj}/>)
         }
       </div>
     </div>

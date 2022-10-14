@@ -86,7 +86,6 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
             </button>
           </div>
         </div>
-
       </div>
       <Comments foodId={id} />
 
