@@ -12,6 +12,15 @@ export const pizzaAPI = {
   },
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
+  },
+  getComments: () => {
+    return instance.get<CommentsResponseType[]>(`/comments`)
+  },
+  getCommentsById: (id: string) => {
+    return instance.get<CommentsResponseType[]>(`/comments/${id}`)
+  },
+  createComment: (comment: CommentsResponseType) => {
+    return instance.post<CommentsResponseType>('/comments', comment)
   }
 }
 
@@ -32,4 +41,10 @@ export type PizzaResponseType = {
   types: number[];
   rating: number;
   count: number
+}
+
+export type CommentsResponseType = {
+  id: string
+  foodId: string
+  text: string
 }

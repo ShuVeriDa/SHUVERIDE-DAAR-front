@@ -1,0 +1,14 @@
+.commentAction {
+  padding-left: 8px;
+  cursor: auto;
+}
+
+[class*='-col-rtl'] .commentAction {
+  padding-right: 8px;
+  padding-left: 0;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+}

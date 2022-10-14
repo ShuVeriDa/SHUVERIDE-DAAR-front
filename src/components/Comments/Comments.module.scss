@@ -1,0 +1,48 @@
+.wrapper {
+  border-top: 1px solid #dce1e6;
+  margin: 50px auto;
+  position: relative;
+  width: 500px;
+
+  .comment {
+    margin-top: 25px;
+  }
+
+  .input {
+    display: block;
+    width: 422px;
+    min-height: 34px;
+    border: 1px solid #d3d9de;
+    border-radius: 5px;
+    padding: 7px 13px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .btn {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    color: #d3d9de;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &Active {
+      color: #969898;
+    }
+  }
+
+  .commentItem {
+    display: flex;
+    align-items: center;
+    padding: 5px 5px 5px 20px;
+    height: 53px;
+    border-bottom: 1px solid #dce1e6;
+  }
+
+}
+
+
+

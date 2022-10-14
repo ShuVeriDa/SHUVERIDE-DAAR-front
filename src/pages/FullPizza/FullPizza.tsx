@@ -1,12 +1,12 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import styles from './FullPizza.module.scss'
 import {FetchOnePizzaTC} from "../../redux/pizza/pizzaSlice";
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
-import {selectCartItemById} from "../../redux/cart/cartSelector";
+import {Comments} from "../../components/Comments/Comments";
 
 const typesName = ['тонкое', "традиционное"]
 
@@ -18,6 +18,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
   const {item} = useAppSelector(state => state.pizza)
   const dispatch = useDispatch<AppDispatchType>()
   const {id} = useParams()
+
 
   const navigate = useNavigate()
   const addedCount = item ? item.count : 0
@@ -87,6 +88,8 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
         </div>
 
       </div>
+      <Comments foodId={id} />
+
     </div>
   );
 };
