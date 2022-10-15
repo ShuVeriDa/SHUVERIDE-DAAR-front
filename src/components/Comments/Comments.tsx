@@ -1,9 +1,8 @@
-import {ChangeEvent, FC, useCallback, useEffect, useRef, useState} from 'react';
-import {CommentsResponseType, pizzaAPI} from "../../api/pizzaAPI";
+import {ChangeEvent, FC, useEffect, useState} from 'react';
 import uuid from 'react-uuid';
-import {useNavigate} from "react-router-dom";
 import styles from './Comments.module.scss'
 import {CommentItem} from "../CommentItem/CommentItem";
+import {commentAPI, CommentsResponseType} from '../../api/commentAPI';
 
 
 interface CommentsPropsType {
@@ -28,7 +27,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     setValueComment('')
 
     try {
-      const res = await pizzaAPI.createComment(comment)
+      const res = await commentAPI.createComment(comment)
       setComments((prev => [...prev, res.data]))
     } catch (error) {
       console.warn(error)
@@ -36,11 +35,10 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     }
   }
 
-
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await pizzaAPI.getComments()
+        const res = await commentAPI.getComments()
         setComments(res.data)
       } catch (error) {
         console.warn(error)
@@ -51,7 +49,16 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     fetchComments()
   }, [])
 
-  console.log(comments)
+  const removeComment = async (id:string) => {
+    try {
+      const res = await commentAPI.removeComment(id)
+      setComments(prevState => prevState.filter(obj => obj.id !== res.data.id))
+    } catch (error) {
+      console.warn(error)
+      alert('Не удалось удалить комментарий')
+    }
+  }
+
   return (
     <div className={styles.wrapper}>
       <span>Комментарий: {comments.filter(obj => obj.foodId === foodId).length}</span>
@@ -79,7 +86,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
           {
           comments
             .filter(obj => obj.foodId === foodId)
-            .map(obj => <CommentItem key={obj.id} {...obj}/>)
+            .map(obj => <CommentItem key={obj.id} {...obj} removeComment={removeComment}/>)
         }
       </div>
     </div>

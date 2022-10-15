@@ -1,10 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {SortListType} from "../components/SortPopup";
-
-const instance = axios.create({
-  baseURL: 'https://630a32f93249910032824d12.mockapi.io/'
-})
-
+import { instance } from "./intance";
 
 export const pizzaAPI = {
   getPizzas: (params: SearchPizzasParamsType) => {
@@ -13,15 +9,7 @@ export const pizzaAPI = {
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
   },
-  getComments: () => {
-    return instance.get<CommentsResponseType[]>(`/comments`)
-  },
-  getCommentsById: (id: string) => {
-    return instance.get<CommentsResponseType[]>(`/comments/${id}`)
-  },
-  createComment: (comment: CommentsResponseType) => {
-    return instance.post<CommentsResponseType>('/comments', comment)
-  }
+
 }
 
 export type SearchPizzasParamsType = {
@@ -41,10 +29,4 @@ export type PizzaResponseType = {
   types: number[];
   rating: number;
   count: number
-}
-
-export type CommentsResponseType = {
-  id: string
-  foodId: string
-  text: string
 }
