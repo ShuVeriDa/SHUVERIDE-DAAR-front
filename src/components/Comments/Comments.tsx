@@ -49,13 +49,23 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     fetchComments()
   }, [])
 
-  const removeComment = async (id:string) => {
+  const removeComment = async (id: string) => {
     try {
       const res = await commentAPI.removeComment(id)
       setComments(prevState => prevState.filter(obj => obj.id !== res.data.id))
     } catch (error) {
       console.warn(error)
       alert('Не удалось удалить комментарий')
+    }
+  }
+
+  const editComment = async (id: string) => {
+    try {
+      const res = await commentAPI.editComment(id)
+
+    } catch (error) {
+      console.warn(error)
+      alert('Не удалось редактировать комментарий')
     }
   }
 
@@ -83,10 +93,16 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
       <div>
         {/*не смог реализовать запрос комментраиев по foodId через mockapi.io.
          Поэтому пришлось запрашивать все комментарии и потом фильтровать по foodId*/}
-          {
+        {
           comments
             .filter(obj => obj.foodId === foodId)
-            .map(obj => <CommentItem key={obj.id} {...obj} removeComment={removeComment}/>)
+            .map(obj => <CommentItem key={obj.id}
+                                     {...obj}
+                                     removeComment={removeComment}
+                                     setValueComment={setValueComment}
+
+              />
+            )
         }
       </div>
     </div>

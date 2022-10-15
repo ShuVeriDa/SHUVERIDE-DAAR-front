@@ -4,9 +4,19 @@
   align-content: center;
   flex-direction: column;
   padding: 5px 5px 5px 20px;
-  height: 73px;
+  min-height: 73px;
   border-bottom: 1px solid #dce1e6;
 
+  .input {
+    display: block;
+    width: 422px;
+    min-height: 34px;
+    border: 1px solid #d3d9de;
+    border-radius: 5px;
+    padding: 7px 13px;
+    font-size: 13px;
+    line-height: 16px;
+  }
   .name {
     font-size: 14px;
     color: #2a5885;
