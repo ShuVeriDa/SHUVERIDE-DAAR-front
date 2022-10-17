@@ -23,4 +23,5 @@ export type CommentsResponseType = {
   id: string
   foodId: string
   text: string
+  createdAt: string
 }

@@ -12,6 +12,7 @@ interface CommentsPropsType {
 export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   const [comments, setComments] = useState<CommentsResponseType[]>([])
   const [valueComment, setValueComment] = useState('')
+  const commentCreatedAt = new Intl.DateTimeFormat("ru", {day: "numeric", month: "long", year: "numeric", hour:'numeric', minute: "numeric"}).format(new Date()).replace(/(\s?\г\.?)/, " в")
 
   console.log('valueComment :' + valueComment)
 
@@ -28,16 +29,14 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
       console.warn(error)
       alert('Не удалось редактировать комментарий')
     }
-
-
   }
-
 
   const createNewComment = async () => {
     const comment: CommentsResponseType = {
       id: uuid(),
       foodId: foodId!,
-      text: valueComment
+      text: valueComment,
+      createdAt: commentCreatedAt
     }
 
     setValueComment('')
@@ -76,8 +75,6 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   }
 
 
-
-
   return (
     <div className={styles.wrapper}>
       <span>Комментарий: {comments.filter(obj => obj.foodId === foodId).length}</span>
@@ -109,7 +106,6 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
                                      {...obj}
                                      removeComment={removeComment}
                                      editComment={editComment}
-
               />
             )
         }

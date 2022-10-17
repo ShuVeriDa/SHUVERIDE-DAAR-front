@@ -10,7 +10,7 @@ interface CommentItemPropsType {
 
 export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
   {
-    id, text, foodId, removeComment, editComment
+    id, text, foodId, removeComment, editComment, createdAt
   }) => {
   const [isEdit, setEdit] = useState(false)
   const [value, setValue] = useState(text)
@@ -59,7 +59,7 @@ export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
             d="M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z"/>
         </svg>
       </div>
-      <span className={styles.date}>14 октября 2022 в 19:52</span>
+      <span className={styles.date}>{createdAt?.replace(',','')}</span>
     </div>
   );
 };
