@@ -18,7 +18,6 @@ export const commentAPI = {
   }
 }
 
-
 export type CommentsResponseType = {
   id: string
   foodId: string
