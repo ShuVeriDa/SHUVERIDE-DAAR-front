@@ -13,8 +13,8 @@ export const commentAPI = {
   removeComment: (id: string) => {
     return instance.delete<CommentsResponseType>(`/comments/${id}`)
   },
-  editComment: (id: string) => {
-    return instance.put<CommentsResponseType>(`comments/${id}`)
+  editComment: (id: string, text: string) => {
+    return instance.put<CommentsResponseType>(`comments/${id}`, {text: text})
   }
 }
 

@@ -13,9 +13,25 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   const [comments, setComments] = useState<CommentsResponseType[]>([])
   const [valueComment, setValueComment] = useState('')
 
+  console.log('valueComment :' + valueComment)
+
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setValueComment(e.currentTarget.value)
   }
+
+  const editComment = async (id: string, value: string) => {
+    try {
+     const res = await commentAPI.editComment(id, value)
+      setComments(prev => prev.map(obj => obj.id === id ? {...obj, text: res.data.text} : obj))
+      setValueComment('')
+    } catch (error) {
+      console.warn(error)
+      alert('Не удалось редактировать комментарий')
+    }
+
+
+  }
+
 
   const createNewComment = async () => {
     const comment: CommentsResponseType = {
@@ -59,15 +75,8 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     }
   }
 
-  const editComment = async (id: string) => {
-    try {
-      const res = await commentAPI.editComment(id)
 
-    } catch (error) {
-      console.warn(error)
-      alert('Не удалось редактировать комментарий')
-    }
-  }
+
 
   return (
     <div className={styles.wrapper}>
@@ -99,7 +108,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
             .map(obj => <CommentItem key={obj.id}
                                      {...obj}
                                      removeComment={removeComment}
-                                     setValueComment={setValueComment}
+                                     editComment={editComment}
 
               />
             )

@@ -4,7 +4,7 @@
   width: 500px;
 
   .comment {
-    margin-top: 25px;
+    margin: 25px 0 10px 0;
   }
 
   .input {
@@ -18,20 +18,23 @@
     line-height: 16px;
   }
 
-  .btn {
-    position: absolute;
-    top: 52px;
-    right: 45px;
-    color: #d3d9de;
 
-    &:hover {
-      cursor: pointer;
+    .btn {
+      position: absolute;
+      top: 52px;
+      right: 45px;
+      color: #d3d9de;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &Active {
+        color: #969898;
+      }
     }
 
-    &Active {
-      color: #969898;
-    }
-  }
+
 
   .commentItem {
     display: flex;
