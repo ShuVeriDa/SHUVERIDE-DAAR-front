@@ -3,6 +3,9 @@ import uuid from 'react-uuid';
 import styles from './Comments.module.scss'
 import {CommentItem} from "../CommentItem/CommentItem";
 import {commentAPI, CommentsResponseType} from '../../api/commentAPI';
+import {useDispatch} from "react-redux";
+import {AppDispatchType, useAppSelector} from "../../redux/store";
+import {FetchCommentsTC} from "../../redux/comment/commentSlice";
 
 
 interface CommentsPropsType {
@@ -10,6 +13,8 @@ interface CommentsPropsType {
 }
 
 export const Comments: FC<CommentsPropsType> = ({foodId}) => {
+  const dispatch = useDispatch<AppDispatchType>()
+  const commentss = useAppSelector(state => state.comment.comments)
   const [comments, setComments] = useState<CommentsResponseType[]>([])
   const [valueComment, setValueComment] = useState('')
   const commentCreatedAt = new Intl.DateTimeFormat("ru", {day: "numeric", month: "long", year: "numeric", hour:'numeric', minute: "numeric"}).format(new Date()).replace(/(\s?\г\.?)/, " в")
@@ -51,17 +56,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   }
 
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const res = await commentAPI.getComments()
-        setComments(res.data)
-      } catch (error) {
-        console.warn(error)
-        alert('Не удалось получить комментарии')
-      }
-    }
-
-    fetchComments()
+    dispatch(FetchCommentsTC())
   }, [])
 
   const removeComment = async (id: string) => {
@@ -77,7 +72,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
 
   return (
     <div className={styles.wrapper}>
-      <span>Комментарий: {comments.filter(obj => obj.foodId === foodId).length}</span>
+      <span>Комментарий: {commentss.filter(obj => obj.foodId === foodId).length}</span>
       <div className={styles.comment}>
         <input className={styles.input} placeholder="Написать комментарий..." value={valueComment}
                onChange={onChangeValue} type="text"/>
@@ -100,7 +95,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
         {/*не смог реализовать запрос комментраиев по foodId через mockapi.io.
          Поэтому пришлось запрашивать все комментарии и потом фильтровать по foodId*/}
         {
-          comments
+          commentss
             .filter(obj => obj.foodId === foodId)
             .map(obj => <CommentItem key={obj.id}
                                      {...obj}
