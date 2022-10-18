@@ -1,4 +1,4 @@
-import {FC, memo, useState} from "react";
+import {FC, memo, useEffect, useRef, useState} from "react";
 import {sortPropertyEnum} from "../redux/pizza/pizzaSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatchType} from "../redux/store";
@@ -25,14 +25,29 @@ export const sortList: SortListType[] = [
 export const SortPopup: FC<SortPopupPropsType> = memo(({sort}) => {
   const dispatch = useDispatch<AppDispatchType>()
   const [visible, setVisible] = useState<boolean>(false)
+  const sortRef = useRef(null)
 
   const onClickCategory = (sortType: SortListType) => {
     setVisible(false)
     dispatch(setSort(sortType))
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setVisible(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.body.addEventListener('click', handleClickOutside)
+    }
+  }, [])
+
    return (
-      <div className="sort">
+      <div ref={sortRef} className="sort">
          <div className="sortLabel">
             <svg className={visible ? 'svgActive' : ''}
                width="10"

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {commentAPI, CommentsResponseType} from "../../api/commentAPI";
 
 export enum StatusEnum {
@@ -10,10 +10,9 @@ export enum StatusEnum {
 
 const initialState: initialStateType = {
   comments: [],
-  commentValue: '',
+  valueComment: '',
   status: StatusEnum.IDLE
 }
-
 
 export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[]>('comments/fetchComments', async () => {
   try {
@@ -59,7 +58,11 @@ export const EditCommentsTC = createAsyncThunk<CommentsResponseType, {id: string
 export const CommentSlice = createSlice({
   name: 'comment',
   initialState,
-  reducers: {},
+  reducers: {
+    setValueComment: (state, action: PayloadAction<string>) => {
+      state.valueComment = action.payload
+    }
+  },
   extraReducers: builder => {
     builder
       //Получение комментарий
@@ -118,11 +121,11 @@ export const CommentSlice = createSlice({
   }
 })
 
-export const {} = CommentSlice.actions
+export const {setValueComment} = CommentSlice.actions
 export const commentReducer = CommentSlice.reducer
 
 interface initialStateType {
   comments: CommentsResponseType[]
-  commentValue: string
+  valueComment: string
   status: StatusEnum
 }
