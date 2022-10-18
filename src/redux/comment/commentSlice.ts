@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import uuid from "react-uuid";
 import {commentAPI, CommentsResponseType} from "../../api/commentAPI";
 
 export enum StatusEnum {
@@ -18,7 +19,18 @@ export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[]>('comment
     const res = await commentAPI.getComments()
     return res.data
   } catch (error) {
+    console.warn(error)
     throw new Error('Не удалось получить комментарии.')
+  }
+})
+
+export const CreateNewCommentTC = createAsyncThunk<CommentsResponseType, CommentsResponseType>('comments/createComment', async (comment) => {
+  try {
+    const res = await commentAPI.createComment(comment)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error('Не удалось написать комментарий.')
   }
 })
 
@@ -39,6 +51,16 @@ export const CommentSlice = createSlice({
       .addCase(FetchCommentsTC.rejected, (state, action) => {
         state.status = StatusEnum.ERROR
         state.comments = []
+      })
+      .addCase(CreateNewCommentTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(CreateNewCommentTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.comments.push(action.payload)
+      })
+      .addCase(CreateNewCommentTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
       })
   }
 })

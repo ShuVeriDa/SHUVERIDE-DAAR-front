@@ -5,7 +5,7 @@ import {CommentItem} from "../CommentItem/CommentItem";
 import {commentAPI, CommentsResponseType} from '../../api/commentAPI';
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
-import {FetchCommentsTC} from "../../redux/comment/commentSlice";
+import {CreateNewCommentTC, FetchCommentsTC} from "../../redux/comment/commentSlice";
 
 
 interface CommentsPropsType {
@@ -45,17 +45,29 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     }
 
     setValueComment('')
-
-    try {
-      const res = await commentAPI.createComment(comment)
-      setComments((prev => [...prev, res.data]))
-    } catch (error) {
-      console.warn(error)
-      alert('Не создать комментарий')
-    }
+    dispatch(CreateNewCommentTC(comment))
+    // try {
+    //   const res = await commentAPI.createComment(comment)
+    //   setComments((prev => [...prev, res.data]))
+    // } catch (error) {
+    //   console.warn(error)
+    //   alert('Не создать комментарий')
+    // }
   }
 
   useEffect(() => {
+    // const fetchComments = async () => {
+    //   try {
+    //     const res = await commentAPI.getComments()
+    //     setComments(res.data)
+    //   } catch (error) {
+    //     console.warn(error)
+    //     alert('Не удалось получить комментарии')
+    //   }
+    // }
+    //
+    // fetchComments()
+
     dispatch(FetchCommentsTC())
   }, [])
 
