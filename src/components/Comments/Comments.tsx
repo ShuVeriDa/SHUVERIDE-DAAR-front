@@ -5,7 +5,7 @@ import {CommentItem} from "../CommentItem/CommentItem";
 import {commentAPI, CommentsResponseType} from '../../api/commentAPI';
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
-import {CreateNewCommentTC, FetchCommentsTC} from "../../redux/comment/commentSlice";
+import {CreateNewCommentTC, FetchCommentsTC, RemoveCommentTC} from "../../redux/comment/commentSlice";
 
 
 interface CommentsPropsType {
@@ -72,13 +72,14 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   }, [])
 
   const removeComment = async (id: string) => {
-    try {
-      const res = await commentAPI.removeComment(id)
-      setComments(prevState => prevState.filter(obj => obj.id !== res.data.id))
-    } catch (error) {
-      console.warn(error)
-      alert('Не удалось удалить комментарий')
-    }
+    dispatch(RemoveCommentTC(id))
+    // try {
+    //   const res = await commentAPI.removeComment(id)
+    //   setComments(prevState => prevState.filter(obj => obj.id !== res.data.id))
+    // } catch (error) {
+    //   console.warn(error)
+    //   alert('Не удалось удалить комментарий')
+    // }
   }
 
 

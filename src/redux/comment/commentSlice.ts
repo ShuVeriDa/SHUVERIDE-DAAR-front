@@ -34,12 +34,23 @@ export const CreateNewCommentTC = createAsyncThunk<CommentsResponseType, Comment
   }
 })
 
+export const RemoveCommentTC = createAsyncThunk<CommentsResponseType, string>('comments/removeComment', async (id: string) => {
+  try {
+    const res = await commentAPI.removeComment(id)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error('Не удалось написать комментарий.')
+  }
+})
+
 export const CommentSlice = createSlice({
   name: 'comment',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
+      //Получение комментарий
       .addCase(FetchCommentsTC.pending, (state) => {
         state.status = StatusEnum.LOADING
         state.comments = []
@@ -52,6 +63,7 @@ export const CommentSlice = createSlice({
         state.status = StatusEnum.ERROR
         state.comments = []
       })
+      //Создание комментария
       .addCase(CreateNewCommentTC.pending, (state) => {
         state.status = StatusEnum.LOADING
       })
@@ -60,6 +72,17 @@ export const CommentSlice = createSlice({
         state.comments.push(action.payload)
       })
       .addCase(CreateNewCommentTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+      })
+    //Удаление комментария
+      .addCase(RemoveCommentTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(RemoveCommentTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.comments = state.comments.filter(obj => obj.id !== action.payload.id)
+      })
+      .addCase(RemoveCommentTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
       })
   }
