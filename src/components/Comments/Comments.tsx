@@ -5,7 +5,7 @@ import {CommentItem} from "../CommentItem/CommentItem";
 import {commentAPI, CommentsResponseType} from '../../api/commentAPI';
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
-import {CreateNewCommentTC, FetchCommentsTC, RemoveCommentTC} from "../../redux/comment/commentSlice";
+import {CreateNewCommentTC, EditCommentsTC, FetchCommentsTC, RemoveCommentTC} from "../../redux/comment/commentSlice";
 
 
 interface CommentsPropsType {
@@ -21,41 +21,9 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
 
   console.log('valueComment :' + valueComment)
 
-  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueComment(e.currentTarget.value)
-  }
-
-  const editComment = async (id: string, value: string) => {
-    try {
-     const res = await commentAPI.editComment(id, value)
-      setComments(prev => prev.map(obj => obj.id === id ? {...obj, text: res.data.text} : obj))
-      setValueComment('')
-    } catch (error) {
-      console.warn(error)
-      alert('Не удалось редактировать комментарий')
-    }
-  }
-
-  const createNewComment = async () => {
-    const comment: CommentsResponseType = {
-      id: uuid(),
-      foodId: foodId!,
-      text: valueComment,
-      createdAt: commentCreatedAt
-    }
-
-    setValueComment('')
-    dispatch(CreateNewCommentTC(comment))
-    // try {
-    //   const res = await commentAPI.createComment(comment)
-    //   setComments((prev => [...prev, res.data]))
-    // } catch (error) {
-    //   console.warn(error)
-    //   alert('Не создать комментарий')
-    // }
-  }
-
   useEffect(() => {
+    dispatch(FetchCommentsTC())
+
     // const fetchComments = async () => {
     //   try {
     //     const res = await commentAPI.getComments()
@@ -67,12 +35,51 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
     // }
     //
     // fetchComments()
-
-    dispatch(FetchCommentsTC())
   }, [])
+
+  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setValueComment(e.currentTarget.value)
+  }
+
+  const editComment = async (id: string, value: string) => {
+    dispatch(EditCommentsTC({id, text: value}))
+    setValueComment('')
+
+    //   try {
+    //    const res = await commentAPI.editComment(id, value)
+    //     setComments(prev => prev.map(obj => obj.id === id ? {...obj, text: res.data.text} : obj))
+    //     setValueComment('')
+    //   } catch (error) {
+    //     console.warn(error)
+    //     alert('Не удалось редактировать комментарий')
+    //   }
+    // }
+  }
+
+
+  const createNewComment = async () => {
+    const comment: CommentsResponseType = {
+      id: uuid(),
+      foodId: foodId!,
+      text: valueComment,
+      createdAt: commentCreatedAt
+    }
+
+    setValueComment('')
+    dispatch(CreateNewCommentTC(comment))
+
+    // try {
+    //   const res = await commentAPI.createComment(comment)
+    //   setComments((prev => [...prev, res.data]))
+    // } catch (error) {
+    //   console.warn(error)
+    //   alert('Не создать комментарий')
+    // }
+  }
 
   const removeComment = async (id: string) => {
     dispatch(RemoveCommentTC(id))
+
     // try {
     //   const res = await commentAPI.removeComment(id)
     //   setComments(prevState => prevState.filter(obj => obj.id !== res.data.id))

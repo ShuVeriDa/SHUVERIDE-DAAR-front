@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import uuid from "react-uuid";
 import {commentAPI, CommentsResponseType} from "../../api/commentAPI";
 
 export enum StatusEnum {
@@ -11,8 +10,10 @@ export enum StatusEnum {
 
 const initialState: initialStateType = {
   comments: [],
+  commentValue: '',
   status: StatusEnum.IDLE
 }
+
 
 export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[]>('comments/fetchComments', async () => {
   try {
@@ -40,9 +41,20 @@ export const RemoveCommentTC = createAsyncThunk<CommentsResponseType, string>('c
     return res.data
   } catch (error) {
     console.warn(error)
-    throw new Error('Не удалось написать комментарий.')
+    throw new Error('Не удалось удалить комментарий.')
   }
 })
+
+export const EditCommentsTC = createAsyncThunk<CommentsResponseType, {id: string, text: string}>('comments/editComment', async (param) => {
+  try {
+    const res = await commentAPI.editComment(param.id, param.text)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error('Не удалось редактировать комментарий.')
+  }
+})
+
 
 export const CommentSlice = createSlice({
   name: 'comment',
@@ -63,6 +75,7 @@ export const CommentSlice = createSlice({
         state.status = StatusEnum.ERROR
         state.comments = []
       })
+
       //Создание комментария
       .addCase(CreateNewCommentTC.pending, (state) => {
         state.status = StatusEnum.LOADING
@@ -74,7 +87,8 @@ export const CommentSlice = createSlice({
       .addCase(CreateNewCommentTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
       })
-    //Удаление комментария
+
+      //Удаление комментария
       .addCase(RemoveCommentTC.pending, (state) => {
         state.status = StatusEnum.LOADING
       })
@@ -85,6 +99,22 @@ export const CommentSlice = createSlice({
       .addCase(RemoveCommentTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
       })
+
+      //Изменение комментария
+      .addCase(EditCommentsTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(EditCommentsTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        const findComment = state.comments.find(obj => obj.id === action.payload.id)
+
+        if (findComment) {
+          findComment.text = action.payload.text
+        }
+      })
+      .addCase(EditCommentsTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+      })
   }
 })
 
@@ -93,5 +123,6 @@ export const commentReducer = CommentSlice.reducer
 
 interface initialStateType {
   comments: CommentsResponseType[]
+  commentValue: string
   status: StatusEnum
 }
