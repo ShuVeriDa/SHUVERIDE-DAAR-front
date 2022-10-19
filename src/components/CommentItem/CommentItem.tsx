@@ -1,7 +1,7 @@
 import {ChangeEvent, FC, useState} from 'react';
 
-import {CommentsResponseType} from '../../api/commentAPI';
 import styles from './CommentItem.module.scss'
+import {CommentsResponseType} from "../../api/types";
 
 interface CommentItemPropsType {
   removeComment: (id: string) => void

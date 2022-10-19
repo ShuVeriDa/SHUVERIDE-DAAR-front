@@ -59,7 +59,8 @@ export type CartItemType = {
   title: string
   price: number
   imageUrl: string
-  type: string
-  size: number
+  type?: string
+  size?: number
   count: number
+  liter?: number
 }

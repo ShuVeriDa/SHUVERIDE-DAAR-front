@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {pizzaAPI, PizzaResponseType, SearchPizzasParamsType} from "../../api/pizzaAPI";
+import {pizzaAPI} from "../../api/pizzaAPI";
+import {PizzaResponseType, SearchPizzasParamsType} from "../../api/types";
 
 export enum StatusEnum {
   IDLE = 'idle',

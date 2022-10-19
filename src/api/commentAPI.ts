@@ -1,4 +1,5 @@
 import {instance} from "./intance";
+import {CommentsResponseType} from "./types";
 
 export const commentAPI = {
   getComments: () => {
@@ -18,9 +19,3 @@ export const commentAPI = {
   }
 }
 
-export type CommentsResponseType = {
-  id: string
-  foodId: string
-  text: string
-  createdAt: string
-}

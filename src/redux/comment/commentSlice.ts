@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {commentAPI, CommentsResponseType} from "../../api/commentAPI";
+import {commentAPI} from "../../api/commentAPI";
+import {CommentsResponseType} from "../../api/types";
 
 export enum StatusEnum {
   IDLE = 'idle',

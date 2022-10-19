@@ -7,12 +7,15 @@ import styles from './FullPizza.module.scss'
 import {FetchOnePizzaTC} from "../../redux/pizza/pizzaSlice";
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {Comments} from "../../components/Comments/Comments";
+import {drinksAPI} from "../../api/drinksAPI";
+import {DrinksResponseType} from "../../api/types";
 
 const typesName = ['тонкое', "традиционное"]
 
 type FullPizzaPropsType = {}
 
 export const FullPizza: FC<FullPizzaPropsType> = () => {
+  const [drink, setDrink] = useState<DrinksResponseType>()
   const [activeType, setActiveType] = useState<number>(0)
   const [activeSize, setActiveSize] = useState<number>(0)
   const {item} = useAppSelector(state => state.pizza)
@@ -28,7 +31,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
       id: item!.id,
       count: 0,
       type: typesName[activeType],
-      size: item!.sizes[activeSize],
+      size: item?.sizes![activeSize],
       price: item!.price,
       imageUrl: item!.imageUrl,
       title: item!.title,
@@ -55,10 +58,10 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
         <div className={styles.foodConfigBlock} style={{position: "relative",}}>
           <div>
             <h2>{item.title}</h2>
-            <h4>{item.price} ₽, {typesName[activeType]}, {item.sizes[activeSize]} см.</h4>
+            <h4>{item.price} ₽, {typesName[activeType]}, {item.sizes![activeSize]} см.</h4>
             <div style={{width: '280px', textAlign: "center", marginTop: "10px"}} className="pizzaBlockSelector">
               <ul>
-                {item.types.map((type) => (
+                {item.types!.map((type) => (
                   <li key={type}
                       className={activeType === type ? 'active' : ''}
                       onClick={() => setActiveType(type)}
@@ -68,7 +71,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
                 ))}
               </ul>
               <ul>
-                {item.sizes.map((size, i) => (
+                {item.sizes!.map((size, i) => (
                   <li key={size}
                       className={activeSize === i ? 'active' : ''}
                       onClick={() => setActiveSize(i)}

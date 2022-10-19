@@ -8,7 +8,7 @@ type CartItemPropsType = {}
 export const CartItemBlock: FC<CartItemPropsType & CartItemType> = (
   {
     id, type, size, count,
-    price, title, imageUrl
+    price, title, imageUrl, liter
   }) => {
   const dispatch = useDispatch<AppDispatchType>()
 
@@ -37,7 +37,8 @@ export const CartItemBlock: FC<CartItemPropsType & CartItemType> = (
       </div>
       <div className="cartItemInfo">
         <h3>{title}</h3>
-        <p>{type}, {size} см.</p>
+        {size ? <p>{type}, {size} см.</p> : <p>{liter} л.</p>}
+
       </div>
       <div className="cartItemCount">
         <button disabled={count === 1 }

@@ -1,19 +1,19 @@
 import {FC, useState} from 'react';
 
-import {PizzaResponseType} from "../../api/pizzaAPI";
 import {Link} from "react-router-dom";
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
+import {DrinksResponseType, PizzaResponseType} from "../../api/types";
 
 const typesName = ['тонкое', "традиционное"]
 
-export type PizzaBlockPropsType = {}
+export type FoodBlockPropsType = {}
 
-export const PizzaBlock: FC<PizzaBlockPropsType & PizzaResponseType> = (
+export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksResponseType> = (
   {
-    title, price, types, id, sizes, imageUrl
+    title, price, types, id, sizes, imageUrl, liters
   }) => {
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))
@@ -23,16 +23,19 @@ export const PizzaBlock: FC<PizzaBlockPropsType & PizzaResponseType> = (
   const addedCount = cartItem ? cartItem.count : 0
 
   const onClickAdd = () => {
-    const item: CartItemType = {
-      id,
-      count: 0,
-      type: typesName[activeType],
-      size: sizes[activeSize],
-      price,
-      imageUrl,
-      title,
-    }
-    dispatch(addItem(item))
+
+      const item: CartItemType = {
+        id,
+        count: 0,
+        type: !liters ? typesName[activeType] : undefined,
+        size: sizes![activeSize],
+        price,
+        imageUrl,
+        title,
+        liter: liters
+      }
+      dispatch(addItem(item))
+
   }
 
   return (
@@ -42,30 +45,32 @@ export const PizzaBlock: FC<PizzaBlockPropsType & PizzaResponseType> = (
           <img className="pizzaBlockImage"
                src={imageUrl}
                alt="Pizza"/>
-          <h4 className="pizzaBlockTitle">{title}</h4>
+          <h4 className="pizzaBlockTitle">{title} {liters ? `${liters}л` : '' }</h4>
         </Link>
-        <div className="pizzaBlockSelector">
-          <ul>
-            {types.map((type) => (
-              <li key={type}
-                  className={activeType === type ? 'active' : ''}
-                  onClick={() => setActiveType(type)}
-              >
-                {typesName[type]}
-              </li>
-            ))}
-          </ul>
-          <ul>
-            {sizes.map((size, i) => (
-              <li key={size}
-                  className={activeSize === i ? 'active' : ''}
-                  onClick={() => setActiveSize(i)}
-              >
-                {size} см.
-              </li>
-            ))}
-          </ul>
-        </div>
+
+        {types?.length && sizes?.length  ? <div className="pizzaBlockSelector">
+            <ul>
+              {types.map((type) => (
+                <li key={type}
+                    className={activeType === type ? 'active' : ''}
+                    onClick={() => setActiveType(type)}
+                >
+                  {typesName[type]}
+                </li>
+              ))}
+            </ul>
+            <ul>
+              {sizes.map((size, i) => (
+                <li key={size}
+                    className={activeSize === i ? 'active' : ''}
+                    onClick={() => setActiveSize(i)}
+                >
+                  {size} см.
+                </li>
+              ))}
+            </ul>
+        </div> : ''}
+
         <div className="pizzaBlockBottom">
           <div className="pizzaBlockPrice">от {price} ₽</div>
           <button onClick={onClickAdd} className="button buttonOutline buttonAdd">

@@ -1,17 +1,11 @@
 import {instance} from "./intance";
+import {DrinksResponseType} from "./types";
 
 export const drinksAPI = {
   getDrinks: () => {
     return instance.get<DrinksResponseType[]>('/drinks')
   },
-}
-
-export type DrinksResponseType = {
-  id: string,
-  imageUrl: string,
-  title: string,
-  liters: number
-  price: number
-  category: number
-  rating: number
+  getOneDrink: (id: string) => {
+    return instance.get<DrinksResponseType>(`/drinks/${id}`)
+  }
 }

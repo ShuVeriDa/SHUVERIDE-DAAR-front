@@ -2,7 +2,6 @@ import {ChangeEvent, FC, useEffect, useState} from 'react';
 import uuid from 'react-uuid';
 import styles from './Comments.module.scss'
 import {CommentItem} from "../CommentItem/CommentItem";
-import {CommentsResponseType} from '../../api/commentAPI';
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {
@@ -11,6 +10,7 @@ import {
   FetchCommentsTC,
   RemoveCommentTC, setValueComment,
 } from "../../redux/comment/commentSlice";
+import {CommentsResponseType} from "../../api/types";
 
 
 interface CommentsPropsType {

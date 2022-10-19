@@ -6,12 +6,13 @@ import qs from "qs";
 import {Categories} from "../components/Categories";
 import {SortPopup} from "../components/SortPopup";
 import {Pagination} from "../components/Pagination/Pagination";
-import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
+import {FoodBlock} from "../components/FoodBlock/FoodBlock";
 import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
-import {Skeleton} from "../components/PizzaBlock/Skeleton";
+import {Skeleton} from "../components/FoodBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
-import {drinksAPI, DrinksResponseType} from "../api/drinksAPI";
+import {drinksAPI} from "../api/drinksAPI";
+import {DrinksResponseType} from "../api/types";
 
 
 type HomePropsType = {}
@@ -72,7 +73,8 @@ export const Home: FC<HomePropsType> = () => {
 
   const skeleton = array.map((_, index) => <Skeleton key={index}/>)
   const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <PizzaBlock key={obj.id}  {...obj}/>)
+    .map((obj) => <FoodBlock key={obj.id} {...obj}/>)
+  const drinkItems = drinks.map((obj) => <FoodBlock sizes={[]} types={[]} key={obj.id} {...obj}/>)
 
   const onClickCategoryId = (categoryId: number) => {
     dispatch(setCategoryId(categoryId))
@@ -97,6 +99,15 @@ export const Home: FC<HomePropsType> = () => {
           <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
         </div>
         : <div className="contentItems">{status === 'loading' ? skeleton : pizzas}</div>
+      }
+
+      <h2 className="contentTitle">Все напитки</h2>
+      {status === 'error'
+        ? <div className="contentErrorInfo">
+          <h2>Произошла ошибка</h2>
+          <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
+        </div>
+        : <div className="contentItems">{status === 'loading' ? skeleton : drinkItems}</div>
       }
       <Pagination currentPage={currentPage} onChangeCurrentPage={onChangeCurrentPage}/>
     </div>
