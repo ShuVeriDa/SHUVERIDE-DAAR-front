@@ -9,32 +9,32 @@ import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {Comments} from "../../components/Comments/Comments";
 import {drinksAPI} from "../../api/drinksAPI";
 import {DrinksResponseType} from "../../api/types";
+import {FetchOneDrinkTC} from "../../redux/drinks/drinksSlice";
 
 const typesName = ['тонкое', "традиционное"]
 
 type FullPizzaPropsType = {}
 
 export const FullPizza: FC<FullPizzaPropsType> = () => {
-  const [drink, setDrink] = useState<DrinksResponseType>()
   const [activeType, setActiveType] = useState<number>(0)
   const [activeSize, setActiveSize] = useState<number>(0)
   const {item} = useAppSelector(state => state.pizza)
+  const {drink} = useAppSelector(state => state.drink)
   const dispatch = useDispatch<AppDispatchType>()
   const {id} = useParams()
 
-
-  const navigate = useNavigate()
-  const addedCount = item ? item.count : 0
+  const food = item ? item : drink
 
   const onClickAdd = () => {
     const itemCart: CartItemType = {
-      id: item!.id,
+      id: food!.id,
       count: 0,
-      type: typesName[activeType],
+      type: !drink?.liters ? typesName[activeType] : undefined,
       size: item?.sizes![activeSize],
-      price: item!.price,
-      imageUrl: item!.imageUrl,
-      title: item!.title,
+      price: food!.price,
+      imageUrl: food!.imageUrl,
+      title: food!.title,
+      liter: drink?.liters
     }
     dispatch(addItem(itemCart))
   }
@@ -42,10 +42,11 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
 
   useEffect(() => {
     dispatch(FetchOnePizzaTC(id!))
+    dispatch(FetchOneDrinkTC(id!))
   }, [])
 
 
-  if (!item) {
+  if (!food) {
     return <>Loading...</>
   }
 
@@ -53,44 +54,49 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
     <div className='container'>
       <div className={styles.wrapper}>
         <div className={styles.imgBlock}>
-          <img src={item.imageUrl} className={styles.image} alt=""/>
+          <img src={food.imageUrl} className={styles.image} alt=""/>
         </div>
         <div className={styles.foodConfigBlock} style={{position: "relative",}}>
           <div>
-            <h2>{item.title}</h2>
-            <h4>{item.price} ₽, {typesName[activeType]}, {item.sizes![activeSize]} см.</h4>
-            <div style={{width: '280px', textAlign: "center", marginTop: "10px"}} className="pizzaBlockSelector">
-              <ul>
-                {item.types!.map((type) => (
-                  <li key={type}
-                      className={activeType === type ? 'active' : ''}
-                      onClick={() => setActiveType(type)}
-                  >
-                    {typesName[type]}
-                  </li>
-                ))}
-              </ul>
-              <ul>
-                {item.sizes!.map((size, i) => (
-                  <li key={size}
-                      className={activeSize === i ? 'active' : ''}
-                      onClick={() => setActiveSize(i)}
-                  >
-                    {size} см.
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h2>{food.title}</h2>
+            <h4>{food.price} ₽, {drink?.liters ? `${drink?.liters} л.` :  <span>{typesName[activeType]},
+            {item?.sizes![activeSize]} см.</span>}
+
+            </h4>
+            {item?.types?.length && item.sizes?.length
+              ? <div style={{width: '280px', textAlign: "center", marginTop: "10px"}} className="pizzaBlockSelector">
+                <ul>
+                  {item.types.map((type) => (
+                    <li key={type}
+                        className={activeType === type ? 'active' : ''}
+                        onClick={() => setActiveType(type)}
+                    >
+                      {typesName[type]}
+                    </li>
+                  ))}
+                </ul>
+                <ul>
+                  {item.sizes.map((size, i) => (
+                    <li key={size}
+                        className={activeSize === i ? 'active' : ''}
+                        onClick={() => setActiveSize(i)}
+                    >
+                      {size} см.
+                    </li>
+                  ))}
+                </ul>
+              </div> : ''}
           </div>
+
           <div className="pizzaBlockBottom" style={{position: 'absolute', bottom: '30px'}}>
             <button onClick={onClickAdd} className="button buttonOutline buttonAdd">
-              <span>Добавить в корзину за {item.price} ₽</span>
-              {item.count > 0 && <i>{item.count}</i>}
+              <span>Добавить в корзину за {food.price} ₽</span>
+              {food.count > 0 && <i>{food.count}</i>}
             </button>
           </div>
         </div>
       </div>
-      <Comments foodId={id} />
+      <Comments foodId={id}/>
 
     </div>
   );

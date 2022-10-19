@@ -13,7 +13,7 @@ export type FoodBlockPropsType = {}
 
 export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksResponseType> = (
   {
-    title, price, types, id, sizes, imageUrl, liters
+    title, price, types, id, sizes, imageUrl, liters,
   }) => {
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))

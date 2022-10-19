@@ -20,12 +20,23 @@ export const FetchDrinksTC = createAsyncThunk<DrinksResponseType[]>('drinks/fetc
   }
 })
 
+export const FetchOneDrinkTC = createAsyncThunk<DrinksResponseType, string>('drinks/fetchOneDrink', async (id) => {
+  try {
+    const res = await drinksAPI.getOneDrink(id)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error("Не удалось данный напиток.")
+  }
+})
+
 export const DrinksSlice = createSlice({
   name: 'drinks',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
+      //Получение всех напитков
       .addCase(FetchDrinksTC.pending, (state) => {
         state.status = StatusEnum.LOADING
         state.drinks = []
@@ -37,6 +48,20 @@ export const DrinksSlice = createSlice({
       .addCase(FetchDrinksTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
         state.drinks = []
+      })
+
+      //Получение одного напитка
+      .addCase(FetchOneDrinkTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+        state.drink = null
+      })
+      .addCase(FetchOneDrinkTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.drink = action.payload
+      })
+      .addCase(FetchOneDrinkTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+        state.drink = null
       })
   }
 })
