@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import qs from "qs";
 
 import {Categories} from "../components/Categories";
@@ -11,8 +11,7 @@ import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/FoodBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
-import {drinksAPI} from "../api/drinksAPI";
-import {DrinksResponseType} from "../api/types";
+import {FetchDrinksTC} from "../redux/drinks/drinksSlice";
 
 
 type HomePropsType = {}
@@ -20,7 +19,7 @@ type HomePropsType = {}
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
   const {items, status} = useAppSelector(state => state.pizza)
-  const [drinks, setDrinks] = useState<DrinksResponseType[]>([])
+  const {drinks} = useAppSelector(state => state.drink)
   const {categoryId, sort, searchValue, currentPage} = useAppSelector(state => state.filter)
 
   const navigate = useNavigate()
@@ -54,18 +53,11 @@ export const Home: FC<HomePropsType> = () => {
 // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     getPizzas()
-
-    const fetchDrinks = async () => {
-      try {
-        const res = await drinksAPI.getDrinks()
-        setDrinks(res.data)
-      } catch (error) {
-        console.warn(error)
-      }
-    }
-
-    fetchDrinks()
   }, [categoryId, sort.sortProperty, searchValue, currentPage])
+
+  useEffect(() => {
+    dispatch(FetchDrinksTC())
+  }, [])
 
   console.log(drinks)
 

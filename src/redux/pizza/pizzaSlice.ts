@@ -1,13 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {pizzaAPI} from "../../api/pizzaAPI";
 import {PizzaResponseType, SearchPizzasParamsType} from "../../api/types";
-
-export enum StatusEnum {
-  IDLE = 'idle',
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error'
-}
+import {StatusEnum} from "../types";
 
 const initialState: CartSliceStateType = {
   items: [],
