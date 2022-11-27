@@ -4,7 +4,7 @@ import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {useNavigate, useParams} from "react-router-dom";
 
 import styles from './FullPizza.module.scss'
-import {FetchOnePizzaTC} from "../../redux/pizza/pizzaSlice";
+import {FetchOnePizzaTC, IncViewsPizzaTC} from "../../redux/pizza/pizzaSlice";
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {Comments} from "../../components/Comments/Comments";
 import {drinksAPI} from "../../api/drinksAPI";
@@ -41,8 +41,8 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
 
 
   useEffect(() => {
-    dispatch(FetchOnePizzaTC(id!))
-    dispatch(FetchOneDrinkTC(id!))
+      dispatch(FetchOnePizzaTC(id!))
+      dispatch(FetchOneDrinkTC(id!))
   }, [])
 
 
@@ -59,8 +59,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
         <div className={styles.foodConfigBlock} style={{position: "relative",}}>
           <div>
             <h2>{food.title}</h2>
-            <h4>{food.price} ₽, {drink?.liters ? `${drink?.liters} л.` :  <span>{typesName[activeType]},
-            {item?.sizes![activeSize]} см.</span>}
+            <h4>{food.price} ₽, {drink?.liters ? `${drink?.liters} л.` :  <span>{typesName[activeType]}, {item?.sizes![activeSize]} см.</span>}
 
             </h4>
             {item?.types?.length && item.sizes?.length

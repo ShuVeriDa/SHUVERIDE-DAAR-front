@@ -6,6 +6,8 @@ import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
 import {DrinksResponseType, PizzaResponseType} from "../../api/types";
+import {IncViewsPizzaTC, } from "../../redux/pizza/pizzaSlice";
+import {setDrinkViews} from "../../redux/drinks/drinksSlice";
 
 const typesName = ['тонкое', "традиционное"]
 
@@ -13,7 +15,7 @@ export type FoodBlockPropsType = {}
 
 export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksResponseType> = (
   {
-    title, price, types, id, sizes, imageUrl, liters,
+    title, price, types, id, sizes, imageUrl, liters, views
   }) => {
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))
@@ -36,6 +38,11 @@ export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksRespon
       }
       dispatch(addItem(item))
 
+    // liters ? dispatch(setPizzaViews({id} as PizzaResponseType)) : dispatch(setDrinkViews({id} as DrinksResponseType))
+  }
+
+  const onIncView = () => {
+    dispatch(IncViewsPizzaTC(id))
   }
 
   return (
@@ -44,7 +51,9 @@ export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksRespon
         <Link to={`/pizza/${id}`}>
           <img className="pizzaBlockImage"
                src={imageUrl}
-               alt="Pizza"/>
+               alt="Pizza"
+
+          />
           <h4 className="pizzaBlockTitle">{title} {liters ? `${liters}л` : '' }</h4>
         </Link>
 
@@ -70,9 +79,14 @@ export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksRespon
               ))}
             </ul>
         </div> : ''}
-
+        <div>
+          <span onClick={onIncView}>25 likes </span>
+          <span>{views}</span>
+        </div>
         <div className="pizzaBlockBottom">
+
           <div className="pizzaBlockPrice">от {price} ₽</div>
+
           <button onClick={onClickAdd} className="button buttonOutline buttonAdd">
             <svg
               width="12"

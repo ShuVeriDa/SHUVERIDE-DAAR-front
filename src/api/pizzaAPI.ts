@@ -1,5 +1,5 @@
 import {instance} from "./intance";
-import {PizzaResponseType, SearchPizzasParamsType} from "./types";
+import { PizzaResponseType, SearchPizzasParamsType} from "./types";
 
 export const pizzaAPI = {
   getPizzas: (params: SearchPizzasParamsType) => {
@@ -8,5 +8,8 @@ export const pizzaAPI = {
   getOnePizza: (id: string) => {
     return instance.get<PizzaResponseType>(`items/${id}`,)
   },
+  incViewsPizza: (id: string,) => {
+    return instance.put<PizzaResponseType>(`items/${id}`)
+  }
 }
 

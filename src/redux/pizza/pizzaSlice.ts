@@ -27,12 +27,23 @@ export const FetchOnePizzaTC = createAsyncThunk<PizzaResponseType, string>('pizz
   }
 })
 
+export const IncViewsPizzaTC = createAsyncThunk<PizzaResponseType, string>('pizza/incViewPizza', async (id) => {
+  try {
+    const res = await pizzaAPI.incViewsPizza(id)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error('Не удалось увеличить просмотр.')
+  }
+})
+
 export const PizzaSlice = createSlice({
   name: 'pizza',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
+      //получить все пиццы
       .addCase(FetchPizzasTC.pending, (state) => {
         state.status = StatusEnum.LOADING
         state.items = []
@@ -45,6 +56,7 @@ export const PizzaSlice = createSlice({
         state.status = StatusEnum.ERROR
         state.items = []
       })
+      //получить данную пиццу
       .addCase(FetchOnePizzaTC.pending, (state) => {
         state.status = StatusEnum.LOADING
         state.item = null
@@ -57,10 +69,25 @@ export const PizzaSlice = createSlice({
         state.status = StatusEnum.ERROR
         state.item = null
       })
+      //увеличить просмотры
+      .addCase(IncViewsPizzaTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(IncViewsPizzaTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        const findItem = state.items.find(item => item.id === action.payload.id)
+
+        if (findItem) {
+          findItem.views++
+        }
+      })
+      .addCase(IncViewsPizzaTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+      })
 
   }
 })
-
+export const {} = PizzaSlice.actions
 export const pizzaReducer = PizzaSlice.reducer
 
 

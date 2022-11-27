@@ -12,6 +12,8 @@ import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/FoodBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
 import {FetchDrinksTC} from "../redux/drinks/drinksSlice";
+import {foodAPI} from "../api/foodAPI";
+import {FoodResponseType} from "../api/types";
 
 
 type HomePropsType = {}
@@ -51,13 +53,13 @@ export const Home: FC<HomePropsType> = () => {
 
 
 // Если был первый рендер, то запрашиваем пиццы
-  useEffect(() => {
-    getPizzas()
-  }, [categoryId, sort.sortProperty, searchValue, currentPage])
-
-  useEffect(() => {
-    dispatch(FetchDrinksTC())
-  }, [])
+//   useEffect(() => {
+//     getPizzas()
+//   }, [categoryId, sort.sortProperty, searchValue, currentPage])
+//
+//   useEffect(() => {
+//     dispatch(FetchDrinksTC())
+//   }, [])
 
   console.log(drinks)
 
@@ -67,6 +69,7 @@ export const Home: FC<HomePropsType> = () => {
   const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
     .map((obj) => <FoodBlock key={obj.id} {...obj}/>)
   const drinkItems = drinks.map((obj) => <FoodBlock sizes={[]} types={[]} key={obj.id} {...obj}/>)
+
 
   const onClickCategoryId = (categoryId: number) => {
     dispatch(setCategoryId(categoryId))

@@ -1,6 +1,6 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {StatusEnum} from "../types";
-import {DrinksResponseType} from "../../api/types";
+import {DrinksResponseType, PizzaResponseType} from "../../api/types";
 import {drinksAPI} from "../../api/drinksAPI";
 
 
@@ -33,7 +33,15 @@ export const FetchOneDrinkTC = createAsyncThunk<DrinksResponseType, string>('dri
 export const DrinksSlice = createSlice({
   name: 'drinks',
   initialState,
-  reducers: {},
+  reducers: {
+    setDrinkViews: (state, action:PayloadAction<PizzaResponseType>) => {
+      const findItem = state.drinks.find(item => item.id === action.payload.id)
+
+      if(findItem) {
+        findItem.views++
+      }
+    }
+    },
   extraReducers: builder => {
     builder
       //Получение всех напитков
@@ -58,6 +66,7 @@ export const DrinksSlice = createSlice({
       .addCase(FetchOneDrinkTC.fulfilled, (state, action) => {
         state.status = StatusEnum.SUCCESS
         state.drink = action.payload
+
       })
       .addCase(FetchOneDrinkTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
@@ -68,7 +77,7 @@ export const DrinksSlice = createSlice({
 
 
 export const drinksReducer = DrinksSlice.reducer
-export const {} = DrinksSlice.actions
+export const {setDrinkViews} = DrinksSlice.actions
 
 //types
 export type DrinksSliceStateType = {
