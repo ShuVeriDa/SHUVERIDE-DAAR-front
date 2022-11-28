@@ -105,6 +105,10 @@ export enum sortPropertyEnum {
   TITLE_ASC = "-title",
   PRICE_DESC = 'price',
   PRICE_ASC = '-price',
+  VIEWS_DESC= 'views',
+  VIEWS_ASC = '-views',
+  FAVORITES_DESC = "favorites",
+  FAVORITES_ASC = "-favorites",
 }
 
 

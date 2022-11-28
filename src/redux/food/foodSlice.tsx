@@ -18,11 +18,49 @@ export const FetchFoodsTC = createAsyncThunk<{foods: FoodResponseType[]}, Search
   }
 })
 
+export const FetchOneFoodTC = createAsyncThunk<FoodResponseType, string>('food/fetchOneFood', async (id) => {
+  try {
+    const {data} = await foodAPI.fetchOneFood(id)
+    return data
+  } catch (error) {
+    throw new Error(`Failed to get one food`)
+  }
+})
+
 export const FoodSlice = createSlice({
   name: "food",
   initialState,
   reducers: {},
-  extraReducers: {}
+  extraReducers: builder => {
+    builder
+      //Fetch all foods
+      .addCase(FetchFoodsTC.pending, state => {
+        state.status =StatusEnum.LOADING
+        state.foods = []
+      })
+      .addCase(FetchFoodsTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.foods = action.payload.foods
+      })
+      .addCase(FetchFoodsTC.rejected, state => {
+        state.status = StatusEnum.ERROR
+        state.foods = []
+      })
+
+    //Fetch one food by id
+      .addCase(FetchOneFoodTC.pending, state => {
+        state.status = StatusEnum.LOADING
+        state.food = null
+      })
+      .addCase(FetchOneFoodTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.food = action.payload
+      })
+      .addCase(FetchOneFoodTC.rejected, state => {
+        state.status = StatusEnum.ERROR
+        state.food = null
+      })
+  }
 })
 
 export const {} = FoodSlice.actions

@@ -9,7 +9,7 @@ export type SearchPizzasParamsType = {
 export type SearchFoodParamsType = {
   title?: string;
   kind?: string;
-  category?: string;
+  category?: number;
   price?: 'DESC' | 'ASC';
   rating?: 'DESC' | 'ASC';
   views?: 'DESC' | 'ASC';

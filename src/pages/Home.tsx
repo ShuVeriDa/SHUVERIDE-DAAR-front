@@ -14,14 +14,16 @@ import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
 import {FetchDrinksTC} from "../redux/drinks/drinksSlice";
 import {foodAPI} from "../api/foodAPI";
 import {FoodResponseType} from "../api/types";
+import {FetchFoodsTC} from "../redux/food/foodSlice";
 
 
 type HomePropsType = {}
 
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
-  const {items, status} = useAppSelector(state => state.pizza)
-  const {drinks} = useAppSelector(state => state.drink)
+  // const {items} = useAppSelector(state => state.pizza)
+  const {foods, status} = useAppSelector(state => state.food)
+  // const {drinks} = useAppSelector(state => state.drink)
   const {categoryId, sort, searchValue, currentPage} = useAppSelector(state => state.filter)
 
   const navigate = useNavigate()
@@ -30,10 +32,10 @@ export const Home: FC<HomePropsType> = () => {
   const getPizzas = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sort.sortProperty.replace("-", '')
-    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
+    const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC'
     const search = searchValue ? `search=${searchValue}` : ''
-
-    dispatch(FetchPizzasTC({currentPage, category, sortBy, order, search}))
+    dispatch(FetchFoodsTC({title: '', kind: '', category: categoryId, price: "DESC", rating: "DESC", views: "DESC", favorites: 'DESC', limit: '', take: ''}))
+    // dispatch(FetchPizzasTC({currentPage, category, sortBy, order, search}))
   }
 
   // Если изменили параметры и был первый рендер
@@ -61,15 +63,21 @@ export const Home: FC<HomePropsType> = () => {
 //     dispatch(FetchDrinksTC())
 //   }, [])
 
-  console.log(drinks)
+  useEffect(() => {
+    getPizzas()
+  }, [categoryId])
+
+  console.log(foods)
 
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 
   const skeleton = array.map((_, index) => <Skeleton key={index}/>)
-  const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <FoodBlock key={obj.id} {...obj}/>)
-  const drinkItems = drinks.map((obj) => <FoodBlock sizes={[]} types={[]} key={obj.id} {...obj}/>)
+  // const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
+  //   .map((obj) => <FoodBlock key={obj.id} {...obj}/>)
+  // const drinkItems = drinks.map((obj) => <FoodBlock sizes={[]} types={[]} key={obj.id} {...obj}/>)
 
+  const pizzas = foods.filter(obj => obj.kind === 0).map((obj) => <FoodBlock key={obj.id} {...obj} />)
+  const drinks = foods.filter(obj => obj.kind === 1).map((obj) => <FoodBlock key={obj.id} {...obj} />)
 
   const onClickCategoryId = (categoryId: number) => {
     dispatch(setCategoryId(categoryId))
@@ -79,7 +87,6 @@ export const Home: FC<HomePropsType> = () => {
     dispatch(setCurrentPage(page))
   }
 
-  console.log(items)
 
   return (
     <div className='container'>
@@ -102,7 +109,7 @@ export const Home: FC<HomePropsType> = () => {
           <h2>Произошла ошибка</h2>
           <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
         </div>
-        : <div className="contentItems">{status === 'loading' ? skeleton : drinkItems}</div>
+        : <div className="contentItems">{status === 'loading' ? skeleton : drinks}</div>
       }
       <Pagination currentPage={currentPage} onChangeCurrentPage={onChangeCurrentPage}/>
     </div>

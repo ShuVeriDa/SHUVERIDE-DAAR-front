@@ -20,6 +20,10 @@ export const sortList: SortListType[] = [
   {name: "цене (ASC)", sortProperty: sortPropertyEnum.PRICE_ASC},
   {name: "алфавиту (DESC)", sortProperty: sortPropertyEnum.TITLE_DESC},
   {name: "алфавиту (ASC)", sortProperty: sortPropertyEnum.TITLE_ASC},
+  {name: "просмотрам (DESC)", sortProperty: sortPropertyEnum.VIEWS_DESC},
+  {name: "просмотрам (ASC)", sortProperty: sortPropertyEnum.VIEWS_ASC},
+  {name: "понравившимся (DESC)", sortProperty: sortPropertyEnum.FAVORITES_DESC},
+  {name: "понравившимся (ASC)", sortProperty: sortPropertyEnum.FAVORITES_ASC},
 ]
 
 export const SortPopup: FC<SortPopupPropsType> = memo(({sort}) => {

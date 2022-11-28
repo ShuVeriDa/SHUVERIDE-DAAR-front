@@ -5,7 +5,7 @@ import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
-import {DrinksResponseType, PizzaResponseType} from "../../api/types";
+import {DrinksResponseType, FoodResponseType, PizzaResponseType} from "../../api/types";
 import {IncViewsPizzaTC, } from "../../redux/pizza/pizzaSlice";
 import {setDrinkViews} from "../../redux/drinks/drinksSlice";
 
@@ -13,9 +13,9 @@ const typesName = ['тонкое', "традиционное"]
 
 export type FoodBlockPropsType = {}
 
-export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksResponseType> = (
+export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
   {
-    title, price, types, id, sizes, imageUrl, liters, views
+    title, price, types, id, sizes, imageUrl, liters, views, favorites, rating,
   }) => {
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))
@@ -26,17 +26,17 @@ export const FoodBlock: FC<FoodBlockPropsType & PizzaResponseType & DrinksRespon
 
   const onClickAdd = () => {
 
-      const item: CartItemType = {
-        id,
-        count: 0,
-        type: !liters ? typesName[activeType] : undefined,
-        size: sizes![activeSize],
-        price,
-        imageUrl,
-        title,
-        liter: liters
-      }
-      dispatch(addItem(item))
+      // const item: CartItemType = {
+      //   id,
+      //   count: 0,
+      //   type: !liters ? typesName[activeType] : undefined,
+      //   size: sizes![activeSize],
+      //   price,
+      //   imageUrl,
+      //   title,
+      //   liter: liters
+      // }
+      // dispatch(addItem(item))
 
     // liters ? dispatch(setPizzaViews({id} as PizzaResponseType)) : dispatch(setDrinkViews({id} as DrinksResponseType))
   }
