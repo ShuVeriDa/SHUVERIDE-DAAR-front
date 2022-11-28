@@ -15,6 +15,7 @@ import {FetchDrinksTC} from "../redux/drinks/drinksSlice";
 import {foodAPI} from "../api/foodAPI";
 import {FoodResponseType} from "../api/types";
 import {FetchFoodsTC} from "../redux/food/foodSlice";
+import {FoodContent} from "../components/FoodContent";
 
 
 type HomePropsType = {}
@@ -33,8 +34,19 @@ export const Home: FC<HomePropsType> = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sort.sortProperty.replace("-", '')
     const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC'
-    const search = searchValue ? `search=${searchValue}` : ''
-    dispatch(FetchFoodsTC({title: '', kind: '', category: categoryId, price: "DESC", rating: "DESC", views: "DESC", favorites: 'DESC', limit: '', take: ''}))
+    const search = searchValue ? `title=${searchValue}` : ''
+    const kind = categoryId > 0 ? '0' : ''
+
+    console.log(sortBy)
+    dispatch(FetchFoodsTC({
+      title: search,
+      kind: kind,
+      category: category,
+      sortBy: sortBy,
+      order: order,
+      limit: '',
+      take: ''
+    }))
     // dispatch(FetchPizzasTC({currentPage, category, sortBy, order, search}))
   }
 
@@ -54,7 +66,7 @@ export const Home: FC<HomePropsType> = () => {
   }, [categoryId, sort.sortProperty])
 
 
-// Если был первый рендер, то запрашиваем пиццы
+
 //   useEffect(() => {
 //     getPizzas()
 //   }, [categoryId, sort.sortProperty, searchValue, currentPage])
@@ -63,9 +75,10 @@ export const Home: FC<HomePropsType> = () => {
 //     dispatch(FetchDrinksTC())
 //   }, [])
 
+// Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     getPizzas()
-  }, [categoryId])
+  }, [categoryId, sort.sortProperty, searchValue])
 
   console.log(foods)
 
@@ -94,23 +107,8 @@ export const Home: FC<HomePropsType> = () => {
         <Categories categoryId={categoryId} onClickCategoryId={onClickCategoryId}/>
         <SortPopup sort={sort}/>
       </div>
-      <h2 className="contentTitle">Все пиццы</h2>
-      {status === 'error'
-        ? <div className="contentErrorInfo">
-          <h2>Произошла ошибка</h2>
-          <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
-        </div>
-        : <div className="contentItems">{status === 'loading' ? skeleton : pizzas}</div>
-      }
-
-      <h2 className="contentTitle">Все напитки</h2>
-      {status === 'error'
-        ? <div className="contentErrorInfo">
-          <h2>Произошла ошибка</h2>
-          <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
-        </div>
-        : <div className="contentItems">{status === 'loading' ? skeleton : drinks}</div>
-      }
+      <FoodContent food={pizzas} status={status} title={'пиццы'} skeleton={skeleton}/>
+      <FoodContent food={drinks} status={status} title={'напитки'} skeleton={skeleton}/>
       <Pagination currentPage={currentPage} onChangeCurrentPage={onChangeCurrentPage}/>
     </div>
   );

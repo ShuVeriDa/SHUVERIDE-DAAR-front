@@ -9,30 +9,28 @@ export type SearchPizzasParamsType = {
 export type SearchFoodParamsType = {
   title?: string;
   kind?: string;
-  category?: number;
-  price?: 'DESC' | 'ASC';
-  rating?: 'DESC' | 'ASC';
-  views?: 'DESC' | 'ASC';
-  favorites?: 'DESC' | 'ASC';
+  category?: string;
+  sortBy: string
+  order: 'DESC' | 'ASC'
   limit?: string;
   take?: string;
 }
 
 export type FoodResponseType = {
-      id: string,
-      title: string,
-      imageUrl: string,
-      price: number,
-      kind: number,
-      category: number
-      types: number[] | null,
-      sizes: number[] | null,
-      liters: number | null,
-      views: number,
-      favorites: number,
-      rating: number,
-      createdAt: string,
-      updatedAt: string
+  id: string,
+  title: string,
+  imageUrl: string,
+  price: number,
+  kind: number,
+  category: number
+  types: number[] | null,
+  sizes: number[] | null,
+  liters: number | null,
+  views: number,
+  favorites: number,
+  rating: number,
+  createdAt: string,
+  updatedAt: string
 }
 
 export type PizzaResponseType = {
@@ -45,7 +43,7 @@ export type PizzaResponseType = {
   count: number
   views: number
   sizes?: number[];
-  types?: number[] ;
+  types?: number[];
 
 }
 export type DrinksResponseType = {
