@@ -59,8 +59,8 @@ export type CartItemType = {
   title: string
   price: number
   imageUrl: string
-  type?: string
-  size?: number
+  type?: string   | undefined
+  size?: number | undefined
   count: number
-  liter?: number
+  liter?: number | undefined
 }

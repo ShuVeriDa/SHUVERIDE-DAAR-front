@@ -31,6 +31,7 @@ export type FoodResponseType = {
   rating: number,
   createdAt: string,
   updatedAt: string
+  count: number
 }
 
 export type PizzaResponseType = {

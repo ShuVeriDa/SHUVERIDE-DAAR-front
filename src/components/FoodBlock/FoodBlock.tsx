@@ -41,14 +41,10 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
     // liters ? dispatch(setPizzaViews({id} as PizzaResponseType)) : dispatch(setDrinkViews({id} as DrinksResponseType))
   }
 
-  const onIncView = () => {
-    dispatch(IncViewsPizzaTC(id))
-  }
-
   return (
     <div className='pizzaBlockWrapper'>
       <div className="pizzaBlock">
-        <Link to={`/pizza/${id}`}>
+        <Link to={`/food/${id}`}>
           <img className="pizzaBlockImage"
                src={imageUrl}
                alt="Pizza"
@@ -80,7 +76,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
             </ul>
         </div> : ''}
         <div>
-          <span onClick={onIncView}>25 likes </span>
+          <span>{favorites} likes </span>
           <span>{views}</span>
         </div>
         <div className="pizzaBlockBottom">

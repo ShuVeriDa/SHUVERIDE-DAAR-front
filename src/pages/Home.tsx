@@ -7,13 +7,9 @@ import {Categories} from "../components/Categories";
 import {SortPopup} from "../components/SortPopup";
 import {Pagination} from "../components/Pagination/Pagination";
 import {FoodBlock} from "../components/FoodBlock/FoodBlock";
-import {FetchPizzasTC} from "../redux/pizza/pizzaSlice";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/FoodBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
-import {FetchDrinksTC} from "../redux/drinks/drinksSlice";
-import {foodAPI} from "../api/foodAPI";
-import {FoodResponseType} from "../api/types";
 import {FetchFoodsTC} from "../redux/food/foodSlice";
 import {FoodContent} from "../components/FoodContent";
 
