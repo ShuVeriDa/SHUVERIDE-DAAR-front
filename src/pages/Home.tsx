@@ -18,9 +18,7 @@ type HomePropsType = {}
 
 export const Home: FC<HomePropsType> = () => {
   const dispatch = useDispatch<AppDispatchType>()
-  // const {items} = useAppSelector(state => state.pizza)
   const {foods, status} = useAppSelector(state => state.food)
-  // const {drinks} = useAppSelector(state => state.drink)
   const {categoryId, sort, searchValue, currentPage} = useAppSelector(state => state.filter)
 
   const navigate = useNavigate()
@@ -43,7 +41,6 @@ export const Home: FC<HomePropsType> = () => {
       limit: '',
       take: ''
     }))
-    // dispatch(FetchPizzasTC({currentPage, category, sortBy, order, search}))
   }
 
   // Если изменили параметры и был первый рендер
@@ -61,16 +58,6 @@ export const Home: FC<HomePropsType> = () => {
     isMounted.current = true
   }, [categoryId, sort.sortProperty])
 
-
-
-//   useEffect(() => {
-//     getPizzas()
-//   }, [categoryId, sort.sortProperty, searchValue, currentPage])
-//
-//   useEffect(() => {
-//     dispatch(FetchDrinksTC())
-//   }, [])
-
 // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     getPizzas()
@@ -81,9 +68,6 @@ export const Home: FC<HomePropsType> = () => {
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 
   const skeleton = array.map((_, index) => <Skeleton key={index}/>)
-  // const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-  //   .map((obj) => <FoodBlock key={obj.id} {...obj}/>)
-  // const drinkItems = drinks.map((obj) => <FoodBlock sizes={[]} types={[]} key={obj.id} {...obj}/>)
 
   const pizzas = foods.filter(obj => obj.kind === 0).map((obj) => <FoodBlock key={obj.id} {...obj} />)
   const drinks = foods.filter(obj => obj.kind === 1).map((obj) => <FoodBlock key={obj.id} {...obj} />)
