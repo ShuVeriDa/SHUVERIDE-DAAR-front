@@ -1,0 +1,19 @@
+.foodConfig {
+  width: 286px;
+  .favoritesAndViews {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7px;
+    .favAndViews {
+      display: flex;
+      align-self: center;
+      .svg {
+        margin-right: 2px;
+        color: #282c34;
+      }
+    }
+  }
+}
+
+

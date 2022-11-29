@@ -25,7 +25,7 @@ export type FoodResponseType = {
   category: number
   types: number[] | null,
   sizes: number[] | null,
-  liters: number | null,
+  liters: number | null | undefined
   views: number,
   favorites: number,
   rating: number,

@@ -62,5 +62,5 @@ export type CartItemType = {
   type?: string   | undefined
   size?: number | undefined
   count: number
-  liter?: number | undefined
+  liter?: number | undefined | null
 }
