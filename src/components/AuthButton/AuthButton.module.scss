@@ -1,0 +1,24 @@
+.btnContainer {
+  position: absolute;
+  top: 55px;
+  left: 1100px;
+  .btn {
+    border: 0;
+    border-radius: 17px;
+    height: 32px;
+    width: 70px;
+    padding: 8px 16px;
+    color: #5c6370;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    background-color: #f3f3f7;
+
+    &:hover {
+      color: black;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+}

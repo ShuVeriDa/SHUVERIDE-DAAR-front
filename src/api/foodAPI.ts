@@ -11,5 +11,8 @@ export const foodAPI = {
   },
   removeFood: (id: string) => {
     return instance.delete<FoodResponseType>(`foods/${id}`)
+  },
+  addToFavorites: (id: string) => {
+    return instance.post(`foods/${id}/favorites`)
   }
 }
