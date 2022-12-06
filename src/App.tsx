@@ -6,6 +6,7 @@ import './scss/app.scss';
 import {MainLayout} from "./layouts/MainLayout";
 import {Home} from "./pages/Home";
 import {Cart} from "./pages/Cart";
+import {Auth} from "./components/Auth/Auth";
 
 
 // const Cart = Loadable({
@@ -18,38 +19,40 @@ import {Cart} from "./pages/Cart";
 // })
 
 const FullPizza = lazy(() => import(/* webpackChunkName: "FullPizza"*/ "./pages/FullPizza/FullPizza")
-   .then(({FullPizza}) => ({default: FullPizza})),
+  .then(({FullPizza}) => ({default: FullPizza})),
 )
 const NotFound = lazy(() => import(/* webpackChunkName: "NotFound"*/ './pages/NotFound')
-   .then(({NotFound}) => ({default: NotFound}))
+  .then(({NotFound}) => ({default: NotFound}))
 )
 
 function App() {
-   return (
-      <Routes>
-         <Route path={'/'} element={<MainLayout/>}>
-            <Route path={''} element={<Home/>}/>
-            <Route path={'cart'}
-                   element={
-                      <Suspense fallback={<div>Идет загрузка...</div>}>
-                         <Cart/>
-                      </Suspense>}
-            />
-            <Route path={'food/:id'}
-                   element={
-                      <Suspense fallback={<div>Идет загрузка...</div>}>
-                         <FullPizza/>
-                      </Suspense>}
-            />
-            <Route path={'*'}
-                   element={
-                      <Suspense fallback={<div>Идет загрузка...</div>}>
-                         <NotFound/>
-                      </Suspense>}
-            />
-         </Route>
-      </Routes>
-   );
+  return (
+    <Routes>
+      <Route path={'/auth'} element={<Auth/>}/>
+      <Route path={'/'} element={<MainLayout/>}>
+        <Route path={''} element={<Home/>}/>
+
+        <Route path={'cart'}
+               element={
+                 <Suspense fallback={<div>Идет загрузка...</div>}>
+                   <Cart/>
+                 </Suspense>}
+        />
+        <Route path={'food/:id'}
+               element={
+                 <Suspense fallback={<div>Идет загрузка...</div>}>
+                   <FullPizza/>
+                 </Suspense>}
+        />
+        <Route path={'*'}
+               element={
+                 <Suspense fallback={<div>Идет загрузка...</div>}>
+                   <NotFound/>
+                 </Suspense>}
+        />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

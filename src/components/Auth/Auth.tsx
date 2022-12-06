@@ -1,16 +1,19 @@
 import {FC} from 'react';
-import {Input} from "../Input/Input";
+
+import styles from './Auth.module.scss';
+import {Login} from "../Login/Login";
 
 interface IAuthProps {
 }
 
 export const Auth: FC<IAuthProps> = () => {
   return (
-    <div>
-      <Input title={'Email'} type={'email'}/>
-      <Input title={'Password'} type={'password'}/>
-      <Input title={'Nickname'} type={'text'}/>
-      <input type="file"/>
+    <div className={styles.auth}>
+      <div className={styles.authContainer}>
+        {/*<Register />*/}
+        <Login />
+      </div>
+
     </div>
   );
 };

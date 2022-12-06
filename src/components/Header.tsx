@@ -5,7 +5,7 @@ import logoSvg from '../assets/img/pizza-logo.svg'
 import {Search} from "./Search/Search";
 import {useAppSelector} from "../redux/store";
 import {CartSVG} from "./SvgComponent";
-import {AuthButton} from "./AuthButton/AuthButton";
+import {AuthButton} from "./Buttons/AuthButton/AuthButton";
 import {Auth} from "./Auth/Auth";
 
 
@@ -40,8 +40,6 @@ export const Header: FC<HeaderPropsType> = () => {
             </div>
          </div>
         <AuthButton />
-
-        <Auth />
       </div>
    )
 }
