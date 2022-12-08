@@ -65,3 +65,17 @@ export type CommentsResponseType = {
   text: string
   createdAt: string
 }
+
+export type RegisterType = {
+    nickName: string,
+    email: string,
+    password: string,
+    isAdmin: boolean,
+    avatar: string
+}
+
+export type LoginType = {
+  email: string,
+  password: string
+}
+

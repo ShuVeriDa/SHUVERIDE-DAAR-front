@@ -7,7 +7,6 @@ import styles from './FullPizza.module.scss'
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {Comments} from "../../components/Comments/Comments";
 import {FetchOneFoodTC} from "../../redux/food/foodSlice";
-import {FavoriteSVG, ViewsSVG} from "../../components/SvgComponent";
 import {FoodConfig} from "../../components/FoodConfig/FoodConfig";
 
 const typesName = ['тонкое', "традиционное"]

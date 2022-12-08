@@ -14,6 +14,7 @@ export const Login: FC<ILoginProps> = () => {
       <Input title={'Email'} type={'email'}/>
       <Input title={'Password'} type={'password'}/>
       <SubmitButton title={"Авторизоваться"}/>
+      <SubmitButton title={"Регистрация"}/>
     </div>
   );
 };

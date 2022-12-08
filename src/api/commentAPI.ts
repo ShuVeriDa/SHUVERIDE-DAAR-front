@@ -1,4 +1,4 @@
-import {instance} from "./intance";
+import {instance} from "./interceptors";
 import {CommentsResponseType} from "./types";
 
 export const commentAPI = {

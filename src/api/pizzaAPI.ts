@@ -1,4 +1,4 @@
-import {instance} from "./intance";
+import {instance} from "./interceptors";
 import { PizzaResponseType, SearchPizzasParamsType} from "./types";
 
 export const pizzaAPI = {

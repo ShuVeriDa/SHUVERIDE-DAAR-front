@@ -1,4 +1,4 @@
-import {instance} from "./intance";
+import {instance} from "./interceptors";
 import {FoodResponseType, SearchFoodParamsType} from "./types";
 
 export const foodAPI = {
