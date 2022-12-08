@@ -15,7 +15,6 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
       /*register*/
       .addCase(registerTC.pending, state => {
         state.status = StatusEnum.LOADING

@@ -1,12 +1,12 @@
-import {instance} from "./interceptors";
+import {axiosClassic, instance} from "./interceptors";
 import {CommentsResponseType} from "./types";
 
 export const commentAPI = {
   getComments: () => {
-    return instance.get<CommentsResponseType[]>(`/comments`)
+    return axiosClassic.get<CommentsResponseType[]>(`/comments`)
   },
   getCommentsById: (id: string) => {
-    return instance.get<CommentsResponseType[]>(`/comments/${id}`)
+    return axiosClassic.get<CommentsResponseType[]>(`/comments/${id}`)
   },
   createComment: (comment: CommentsResponseType) => {
     return instance.post<CommentsResponseType>('/comments', comment)

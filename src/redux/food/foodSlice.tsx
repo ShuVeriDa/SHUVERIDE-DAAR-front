@@ -35,7 +35,7 @@ export const FoodSlice = createSlice({
     builder
       //Fetch all foods
       .addCase(FetchFoodsTC.pending, state => {
-        state.status =StatusEnum.LOADING
+        state.status = StatusEnum.LOADING
         state.foods = []
       })
       .addCase(FetchFoodsTC.fulfilled, (state, action) => {

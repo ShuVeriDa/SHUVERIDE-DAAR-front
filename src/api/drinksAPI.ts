@@ -1,11 +1,11 @@
-import {instance} from "./interceptors";
+import {axiosClassic, instance} from "./interceptors";
 import {DrinksResponseType} from "./types";
 
 export const drinksAPI = {
   getDrinks: () => {
-    return instance.get<DrinksResponseType[]>('/drinks')
+    return axiosClassic.get<DrinksResponseType[]>('/drinks')
   },
   getOneDrink: (id: string) => {
-    return instance.get<DrinksResponseType>(`/drinks/${id}`)
+    return axiosClassic.get<DrinksResponseType>(`/drinks/${id}`)
   }
 }
