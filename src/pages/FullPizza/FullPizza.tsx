@@ -6,8 +6,8 @@ import {useParams} from "react-router-dom";
 import styles from './FullPizza.module.scss'
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {Comments} from "../../components/Comments/Comments";
-import {FetchOneFoodTC} from "../../redux/food/foodSlice";
 import {FoodConfig} from "../../components/FoodConfig/FoodConfig";
+import {FetchOneFoodTC} from "../../redux/food/food.actions";
 
 const typesName = ['тонкое', "традиционное"]
 

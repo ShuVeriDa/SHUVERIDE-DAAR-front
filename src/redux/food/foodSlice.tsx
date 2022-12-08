@@ -1,31 +1,13 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {StatusEnum} from "../types";
-import {FoodResponseType, SearchFoodParamsType} from "../../api/types";
-import {foodAPI} from "../../api/foodAPI";
+import {FoodResponseType} from "../../api/types";
+import {FetchFoodsTC, FetchOneFoodTC} from "./food.actions";
 
 const initialState: CartSliceStateType = {
   foods: [],
   food: null,
   status: StatusEnum.IDLE
 }
-
-export const FetchFoodsTC = createAsyncThunk<{foods: FoodResponseType[]}, SearchFoodParamsType> ('food/fetchFoods', async(params) => {
-  try {
-    const res = await foodAPI.fetchFoods(params)
-    return res.data
-  } catch (error) {
-   throw new Error("Failed to get foods")
-  }
-})
-
-export const FetchOneFoodTC = createAsyncThunk<FoodResponseType, string>('food/fetchOneFood', async (id) => {
-  try {
-    const {data} = await foodAPI.fetchOneFood(id)
-    return data
-  } catch (error) {
-    throw new Error(`Failed to get one food`)
-  }
-})
 
 export const FoodSlice = createSlice({
   name: "food",

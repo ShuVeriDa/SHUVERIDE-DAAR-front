@@ -10,8 +10,8 @@ import {FoodBlock} from "../components/FoodBlock/FoodBlock";
 import {AppDispatchType, useAppSelector} from "../redux/store";
 import {Skeleton} from "../components/FoodBlock/Skeleton";
 import {setCategoryId, setCurrentPage} from "../redux/filter/filterSlice";
-import {FetchFoodsTC} from "../redux/food/foodSlice";
 import {FoodContent} from "../components/FoodContent";
+import {FetchFoodsTC} from "../redux/food/food.actions";
 
 
 type HomePropsType = {}
