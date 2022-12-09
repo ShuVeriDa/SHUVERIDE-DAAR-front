@@ -1,0 +1,19 @@
+.profile {
+  display: flex;
+  align-items: center;
+  .image {
+    width: 40px;
+  }
+
+  .nick {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #232323;
+  }
+
+  .admin {
+    margin-right: 10px;
+    font-weight: bold;
+    color: goldenrod;
+  }
+}

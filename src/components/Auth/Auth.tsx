@@ -1,8 +1,8 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 
 import styles from './Auth.module.scss';
 import {Login} from "../Login/Login";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {FormProvider, SubmitHandler, useForm} from "react-hook-form";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {useDispatch} from "react-redux";
 import {LoginInputType} from "../../redux/types";
@@ -23,19 +23,25 @@ export const Auth: FC<IAuthProps> = () => {
     console.log(data)
   }
 
-  return (
-    <div className={styles.auth}>
-      <div className={styles.authContainer}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/*<Register status={status}/>*/}
-          <Login register={registerInput}
-                 formState={formState}
-                 isPasswordRequired
-                 status={status}
-          />
-        </form>
-      </div>
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
 
-    </div>
+  return (
+      <div className={styles.auth}>
+        <div className={styles.authContainer}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/*<Register status={status}/>*/}
+            <Login register={registerInput}
+                   formState={formState}
+                   isPasswordRequired
+                   status={status}
+            />
+          </form>
+        </div>
+
+      </div>
   );
 };

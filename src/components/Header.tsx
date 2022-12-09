@@ -7,6 +7,7 @@ import {useAppSelector} from "../redux/store";
 import {CartSVG} from "./SvgComponent";
 import {AuthButton} from "./Buttons/AuthButton/AuthButton";
 import {Auth} from "./Auth/Auth";
+import {ProfileContainer} from "./ProfileContainer/ProfileContainer";
 
 
 type HeaderPropsType = {}
@@ -38,8 +39,9 @@ export const Header: FC<HeaderPropsType> = () => {
                    </Link>
               }
             </div>
+           <ProfileContainer />
          </div>
-        <AuthButton />
+
       </div>
    )
 }

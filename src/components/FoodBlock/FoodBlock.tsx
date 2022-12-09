@@ -6,9 +6,7 @@ import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
 import {FoodResponseType} from "../../api/types";
-
-import styles from './FoodBlock.module.scss';
-import {AddButtonSVG, FavoriteSVG, ViewsSVG} from "../SvgComponent";
+import {AddButtonSVG} from "../SvgComponent";
 import {FoodConfig} from "../FoodConfig/FoodConfig";
 
 const typesName = ['тонкое', "традиционное"]

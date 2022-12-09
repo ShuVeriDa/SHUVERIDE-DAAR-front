@@ -13,8 +13,12 @@ export interface IAuthResponse extends ITokens {
 }
 
 export interface IUserState {
-  email: string
-  isAdmin: boolean
+  id: number,
+  email: string,
+  nickName: string
+  isAdmin: boolean,
+  avatar: string
+  createdAt: string
 }
 
 export interface IEmailPassword {
