@@ -3,11 +3,13 @@ import {FC} from 'react';
 import styles from './Register.module.scss';
 import {Input} from "../Input/Input";
 import {SubmitButton} from "../Buttons/SubmitButton/SubmitButton";
+import {StatusEnum} from "../../redux/types";
 
 interface IRegisterProps {
+  status: StatusEnum
 }
 
-export const Register: FC<IRegisterProps> = () => {
+export const Register: FC<IRegisterProps> = ({status}) => {
   return (
     <div>
       <h2 className={styles.title}>Регистрация</h2>
@@ -22,7 +24,7 @@ export const Register: FC<IRegisterProps> = () => {
       <div>
         <input type="file" accept='image/*'/>
       </div>
-      <SubmitButton title={"Зарегистрироватся"}/>
+      {/*<SubmitButton status={status} title={"Зарегистрироватся"}/>*/}
 
     </div>
   );

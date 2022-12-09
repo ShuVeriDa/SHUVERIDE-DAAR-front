@@ -4,3 +4,8 @@ export enum StatusEnum {
   SUCCESS = 'success',
   ERROR = 'error'
 }
+
+export type LoginInputType = {
+  email: string
+  password: string
+}
