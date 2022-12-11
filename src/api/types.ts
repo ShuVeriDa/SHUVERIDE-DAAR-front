@@ -1,3 +1,5 @@
+import {IUserState} from "../redux/user/auth.interface";
+
 export type SearchPizzasParamsType = {
   category: string
   sortBy: string
@@ -61,10 +63,31 @@ export type DrinksResponseType = {
 }
 export type CommentsResponseType = {
   id: string
-  foodId: string
   text: string
+  favorites: number
   createdAt: string
+  updatedAt: string
+  food: {
+    id: string,
+    title: string
+  }
+  user: IUserState
 }
+
+export type CreateCommentsRequestType = {
+  id: string
+  text: string
+  favorites?: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type CreateCommentType = {
+  foodId: string | undefined
+  text: string
+}
+
+export type UpdateCommentType =  {id:string} & CreateCommentType
 
 export type RegisterType = {
     nickName: string,

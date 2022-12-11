@@ -1,21 +1,22 @@
 import {axiosClassic, instance} from "./interceptors";
-import {CommentsResponseType} from "./types";
+import {CommentsResponseType, CreateCommentsRequestType, CreateCommentType, UpdateCommentType} from "./types";
 
 export const commentAPI = {
   getComments: () => {
     return axiosClassic.get<CommentsResponseType[]>(`/comments`)
   },
   getCommentsById: (id: string) => {
-    return axiosClassic.get<CommentsResponseType[]>(`/comments/${id}`)
+    return axiosClassic.get<CommentsResponseType[]>(`/comments/food/${id}`)
   },
-  createComment: (comment: CommentsResponseType) => {
+  createComment: (comment: CreateCommentType) => {
     return instance.post<CommentsResponseType>('/comments', comment)
   },
-  removeComment: (id: string) => {
-    return instance.delete<CommentsResponseType>(`/comments/${id}`)
+  editComment: (comment: UpdateCommentType) => {
+    return instance.put<CommentsResponseType>(`/comments/${comment.id}`, comment)
   },
-  editComment: (id: string, text: string) => {
-    return instance.put<CommentsResponseType>(`comments/${id}`, {text: text})
-  }
+  removeComment: (id: string) => {
+    return instance.delete(`/comments/${id}`)
+  },
+
 }
 

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {commentAPI} from "../../api/commentAPI";
-import {CommentsResponseType} from "../../api/types";
+import {CommentsResponseType, CreateCommentType, UpdateCommentType} from "../../api/types";
 
 export enum StatusEnum {
   IDLE = 'idle',
@@ -15,9 +15,9 @@ const initialState: initialStateType = {
   status: StatusEnum.IDLE
 }
 
-export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[]>('comments/fetchComments', async () => {
+export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[], string>('comments/fetchComments', async (id) => {
   try {
-    const res = await commentAPI.getComments()
+    const res = await commentAPI.getCommentsById(id)
     return res.data
   } catch (error) {
     console.warn(error)
@@ -25,7 +25,7 @@ export const FetchCommentsTC = createAsyncThunk<CommentsResponseType[]>('comment
   }
 })
 
-export const CreateNewCommentTC = createAsyncThunk<CommentsResponseType, CommentsResponseType>('comments/createComment', async (comment) => {
+export const CreateNewCommentTC = createAsyncThunk<CommentsResponseType, CreateCommentType>('comments/createComment', async (comment) => {
   try {
     const res = await commentAPI.createComment(comment)
     return res.data
@@ -35,23 +35,23 @@ export const CreateNewCommentTC = createAsyncThunk<CommentsResponseType, Comment
   }
 })
 
-export const RemoveCommentTC = createAsyncThunk<CommentsResponseType, string>('comments/removeComment', async (id: string) => {
+export const EditCommentsTC = createAsyncThunk<CommentsResponseType, UpdateCommentType>('comments/editComment', async (comment) => {
+  try {
+    const res = await commentAPI.editComment(comment)
+    return res.data
+  } catch (error) {
+    console.warn(error)
+    throw new Error('Не удалось редактировать комментарий.')
+  }
+})
+
+export const RemoveCommentTC = createAsyncThunk<CommentsResponseType, string>('comments/removeComment', async (id) => {
   try {
     const res = await commentAPI.removeComment(id)
     return res.data
   } catch (error) {
     console.warn(error)
     throw new Error('Не удалось удалить комментарий.')
-  }
-})
-
-export const EditCommentsTC = createAsyncThunk<CommentsResponseType, {id: string, text: string}>('comments/editComment', async (param) => {
-  try {
-    const res = await commentAPI.editComment(param.id, param.text)
-    return res.data
-  } catch (error) {
-    console.warn(error)
-    throw new Error('Не удалось редактировать комментарий.')
   }
 })
 
@@ -92,18 +92,6 @@ export const CommentSlice = createSlice({
         state.status = StatusEnum.ERROR
       })
 
-      //Удаление комментария
-      .addCase(RemoveCommentTC.pending, (state) => {
-        state.status = StatusEnum.LOADING
-      })
-      .addCase(RemoveCommentTC.fulfilled, (state, action) => {
-        state.status = StatusEnum.SUCCESS
-        state.comments = state.comments.filter(obj => obj.id !== action.payload.id)
-      })
-      .addCase(RemoveCommentTC.rejected, (state) => {
-        state.status = StatusEnum.ERROR
-      })
-
       //Изменение комментария
       .addCase(EditCommentsTC.pending, (state) => {
         state.status = StatusEnum.LOADING
@@ -119,6 +107,20 @@ export const CommentSlice = createSlice({
       .addCase(EditCommentsTC.rejected, (state) => {
         state.status = StatusEnum.ERROR
       })
+
+      //Удаление комментария
+      .addCase(RemoveCommentTC.pending, (state) => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(RemoveCommentTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.comments = state.comments.filter(obj => obj.id !== action.payload.id)
+      })
+      .addCase(RemoveCommentTC.rejected, (state) => {
+        state.status = StatusEnum.ERROR
+      })
+
+
   }
 })
 

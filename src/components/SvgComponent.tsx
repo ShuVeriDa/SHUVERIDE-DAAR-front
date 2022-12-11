@@ -1,4 +1,5 @@
 import {FC} from 'react';
+import styles from "./Comments/Comments.module.scss";
 
 interface ISvgComponentProps {
   styles?: string
@@ -211,6 +212,43 @@ export const LeftArrowSVG: FC<ISvgComponentProps> = ({styles, onClick}) => {
     </svg>
   );
 };
+
+export const AddCommentSVG: FC<ISvgComponentProps> = ({styles, onClick}) => {
+  return (
+    <svg className={styles} onClick={onClick}
+         width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <g id="send_24__Page-2" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="send_24__send_24">
+          <path id="send_24__Rectangle-76" d="M0 0h24v24H0z"></path>
+          <path
+            d="M5.74 15.75a39.14 39.14 0 0 0-1.3 3.91c-.55 2.37-.95 2.9 1.11 1.78 2.07-1.13 12.05-6.69 14.28-7.92 2.9-1.61 2.94-1.49-.16-3.2C17.31 9.02 7.44 3.6 5.55 2.54c-1.89-1.07-1.66-.6-1.1 1.77.17.76.61 2.08 1.3 3.94a4 4 0 0 0 3 2.54l5.76 1.11a.1.1 0 0 1 0 .2L8.73 13.2a4 4 0 0 0-3 2.54Z"
+            id="send_24__Mask" fill="currentColor">
+          </path>
+        </g>
+      </g>
+    </svg>
+  )
+}
+
+export const EditCommentSVG: FC<ISvgComponentProps> = ({styles, onClick}) => {
+  return (
+    <svg onClick={onClick} className={styles} xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 32 32" width="16px" height="16px">
+      <path
+        d="M 23.90625 3.96875 C 22.859375 3.96875 21.8125 4.375 21 5.1875 L 5.1875 21 L 5.125 21.3125 L 4.03125 26.8125 L 3.71875 28.28125 L 5.1875 27.96875 L 10.6875 26.875 L 11 26.8125 L 26.8125 11 C 28.4375 9.375 28.4375 6.8125 26.8125 5.1875 C 26 4.375 24.953125 3.96875 23.90625 3.96875 Z M 23.90625 5.875 C 24.410156 5.875 24.917969 6.105469 25.40625 6.59375 C 26.378906 7.566406 26.378906 8.621094 25.40625 9.59375 L 24.6875 10.28125 L 21.71875 7.3125 L 22.40625 6.59375 C 22.894531 6.105469 23.402344 5.875 23.90625 5.875 Z M 20.3125 8.71875 L 23.28125 11.6875 L 11.1875 23.78125 C 10.53125 22.5 9.5 21.46875 8.21875 20.8125 Z M 6.9375 22.4375 C 8.136719 22.921875 9.078125 23.863281 9.5625 25.0625 L 6.28125 25.71875 Z"/>
+    </svg>
+  )
+}
+
+export const RemoveCommentSVG: FC<ISvgComponentProps> = ({styles, onClick}) => {
+  return (
+     <svg onClick={onClick} className={styles} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+  width="16px" height="16px">
+    <path
+  d="M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z"/>
+    </svg>
+  )
+}
 
 
 
