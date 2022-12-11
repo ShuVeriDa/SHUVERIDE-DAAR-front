@@ -3,19 +3,24 @@ import {ChangeEvent, FC, useState} from 'react';
 import styles from './CommentItem.module.scss'
 import {CommentsResponseType, UpdateCommentType} from "../../api/types";
 import {EditCommentSVG, RemoveCommentSVG} from "../SvgComponent";
+import {commentDateAt} from "../../utils/commentDateAt";
+import {useAppSelector} from "../../redux/store";
 
 interface CommentItemPropsType {
   removeComment: (id: string) => void
   editComment: (comment: UpdateCommentType) => void
+  authorizedUserId: number | undefined
+  isAdmin: boolean | undefined
 }
 
 export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
   {
-    id, text, food, user, updatedAt, favorites, removeComment, editComment, createdAt
+    id, authorizedUserId, isAdmin,
+    text, food, user, updatedAt,
+    favorites, removeComment, editComment, createdAt
   }) => {
   const [isEdit, setEdit] = useState(false)
   const [value, setValue] = useState(text)
-  const commentCreatedAt = new Intl.DateTimeFormat("ru", {day: "numeric", month: "long", year: "numeric", hour:'numeric', minute: "numeric"}).format(new Date()).replace(/(\s?\г\.?)/, " в")
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value)
@@ -30,14 +35,14 @@ export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
   }
 
   const onClickEditComment = () => {
-    editComment({id: id ,foodId: food?.id, text: value})
+    editComment({id: id, foodId: food?.id, text: value})
     setEdit(false)
   }
 
   return (
     <div className={styles.commentItem}>
       <span className={styles.name}>{user.nickName}</span>
-      {isEdit
+      {isEdit && authorizedUserId === user.id
         ? <div className={styles.editText}>
           <input className={styles.input} value={value} type="text" onChange={onChangeValue}/>
           <div className={styles.btnDiv}>
@@ -49,10 +54,12 @@ export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
 
       }
       <div className={styles.svg}>
-        {!isEdit && <EditCommentSVG styles={styles.svgItem} onClick={() => onClickShow(true)}/>}
-        <RemoveCommentSVG onClick={onClickRemove} styles={styles.svgItem}/>
+        {!isEdit && (authorizedUserId === user.id || isAdmin) &&
+          <EditCommentSVG styles={styles.svgItem} onClick={() => onClickShow(true)}/>}
+        {(authorizedUserId === user.id || isAdmin) && <RemoveCommentSVG onClick={onClickRemove} styles={styles.svgItem}/>}
       </div>
-      <span className={styles.date}>{createdAt}</span>
+      <span
+        className={styles.date}>{createdAt !== updatedAt ? commentDateAt(updatedAt) : commentDateAt(createdAt)}</span>
     </div>
   );
 };

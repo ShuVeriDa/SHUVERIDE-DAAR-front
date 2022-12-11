@@ -74,14 +74,6 @@ export type CommentsResponseType = {
   user: IUserState
 }
 
-export type CreateCommentsRequestType = {
-  id: string
-  text: string
-  favorites?: number
-  createdAt: string
-  updatedAt: string
-}
-
 export type CreateCommentType = {
   foodId: string | undefined
   text: string

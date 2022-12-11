@@ -1,5 +1,5 @@
 import {axiosClassic, instance} from "./interceptors";
-import {CommentsResponseType, CreateCommentsRequestType, CreateCommentType, UpdateCommentType} from "./types";
+import {CommentsResponseType, CreateCommentType, UpdateCommentType} from "./types";
 
 export const commentAPI = {
   getComments: () => {
@@ -14,8 +14,8 @@ export const commentAPI = {
   editComment: (comment: UpdateCommentType) => {
     return instance.put<CommentsResponseType>(`/comments/${comment.id}`, comment)
   },
-  removeComment: (id: string) => {
-    return instance.delete(`/comments/${id}`)
+  removeComment: async (id: string) => {
+    return await instance.delete(`/comments/${id}`)
   },
 
 }

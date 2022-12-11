@@ -4,14 +4,16 @@ import {CommentItem} from "../CommentItem/CommentItem";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {
-  CreateNewCommentTC,
-  EditCommentsTC,
-  FetchCommentsTC,
-  RemoveCommentTC,
   setValueComment,
 } from "../../redux/comment/commentSlice";
 import {CreateCommentType, UpdateCommentType} from "../../api/types";
 import {AddCommentSVG} from "../SvgComponent";
+import {
+  CreateNewCommentTC,
+  EditCommentsTC,
+  FetchCommentsTC,
+  RemoveCommentTC
+} from "../../redux/comment/comment.actions";
 
 
 interface CommentsPropsType {
@@ -23,7 +25,8 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   const {comments, valueComment} = useAppSelector(state => state.comment)
   // const [valueComment, setValueComment] = useState('')
   const inputRef = useRef<any>(null)
-
+  const authorizedUserId = useAppSelector(state => state.user.user?.id)
+  const isAdmin = useAppSelector(state => state.user.user?.isAdmin)
 
   console.log('valueComment :' + valueComment)
 
@@ -95,7 +98,7 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   return (
     <div className={styles.wrapper}>
       <span>Комментарий: {comments.length}</span>
-      <div className={styles.comment}>
+      {authorizedUserId && <div className={styles.comment}>
         <input className={styles.input} placeholder="Написать комментарий..." value={valueComment}
                onChange={onChangeValue} type="text"/>
 
@@ -109,18 +112,18 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
                        styles={valueComment.length > 0 ? `${styles.btn} ${styles.btnActive}` : styles.btn}
 
         />
-      </div>
+      </div>}
+
 
       <div>
-        {/*не смог реализовать запрос комментраиев по foodId через mockapi.io.
-         Поэтому пришлось запрашивать все комментарии и потом фильтровать по foodId*/}
-        {/*  // .filter(obj => obj.food?.id === foodId)*/}
         {comments
-          .map(obj => <CommentItem key={obj.id} {...obj}
-                                   removeComment={removeComment}
-                                   editComment={editComment}
-            />
-          )
+          .map((obj) => <CommentItem key={obj.id} {...obj}
+                                     removeComment={removeComment}
+                                     editComment={editComment}
+                                     authorizedUserId={authorizedUserId}
+                                     isAdmin={isAdmin}
+          />)
+          .reverse()
         }
       </div>
     </div>

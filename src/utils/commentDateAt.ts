@@ -1,0 +1,1 @@
+export const commentDateAt = (date: string) => date.replace('T', ' ').slice(0, -8)
