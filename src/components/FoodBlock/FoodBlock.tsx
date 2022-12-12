@@ -39,6 +39,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
     dispatch(addItem(item))
   }
 
+
   return (
     <div className='pizzaBlockWrapper'>
       <div className="pizzaBlock">
@@ -59,6 +60,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
                     sizes={sizes}
                     favorites={favorites}
                     views={views}
+                    id={id}
                     />
         <div className="pizzaBlockBottom">
           <div className="pizzaBlockPrice">от {price} ₽</div>

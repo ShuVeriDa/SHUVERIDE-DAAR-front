@@ -14,5 +14,8 @@ export const foodAPI = {
   },
   addToFavorites: (id: string) => {
     return instance.post(`foods/${id}/favorites`)
+  },
+  removeFromFavorites: (id: string) => {
+    return instance.delete(`foods/${id}/favorites`)
   }
 }

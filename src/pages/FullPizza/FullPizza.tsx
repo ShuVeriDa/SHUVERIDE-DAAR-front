@@ -71,6 +71,7 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
                         sizes={food.sizes}
                         favorites={food.favorites}
                         views={food.views}
+                        id={id!}
             />
           </div>
 

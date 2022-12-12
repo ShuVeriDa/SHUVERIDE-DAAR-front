@@ -2,6 +2,9 @@ import {FC} from 'react';
 
 import styles from './FoodConfig.module.scss';
 import {FavoriteSVG, ViewsSVG} from "../SvgComponent";
+import {AddToFavoritesTC} from "../../redux/food/food.actions";
+import {useDispatch} from "react-redux";
+import {AppDispatchType} from "../../redux/store";
 
 interface IFoodConfigProps {
   types: number[] | null
@@ -13,14 +16,22 @@ interface IFoodConfigProps {
   sizes: number[] | null
   favorites: number
   views: number
+  id: string
 
 }
 
 export const FoodConfig: FC<IFoodConfigProps> = (
     {
-      types, views, favorites, sizes, typesName,
+     id, types, views, favorites, sizes, typesName,
       activeType, setActiveType, setActiveSize, activeSize
     }) => {
+
+  const dispatch = useDispatch<AppDispatchType>()
+
+  const onClickAddToFavorites = () => {
+    dispatch(AddToFavoritesTC(id))
+  }
+
     return (
       <div className={styles.foodConfig}>
         {types?.length && sizes?.length ? <div className="pizzaBlockSelector">
@@ -47,7 +58,7 @@ export const FoodConfig: FC<IFoodConfigProps> = (
           </div>
           : ''}
         <div className={styles.favoritesAndViews}>
-          <span className={styles.favAndViews}>
+          <span className={styles.favAndViews} onClick={onClickAddToFavorites}>
            <FavoriteSVG styles={styles.svg}/>
             {favorites}
           </span>

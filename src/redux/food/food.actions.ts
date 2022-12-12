@@ -18,3 +18,12 @@ export const FetchOneFoodTC = createAsyncThunk<FoodResponseType, string>('food/f
     throw new Error(`Failed to get one food`)
   }
 })
+
+export const AddToFavoritesTC = createAsyncThunk<FoodResponseType, string>('food/addToFavorites', async (id) => {
+  try {
+    const {data} = await foodAPI.addToFavorites(id)
+    return data
+  } catch (error) {
+    throw new Error('Failed to add food to favorites')
+  }
+})

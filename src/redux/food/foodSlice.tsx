@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {StatusEnum} from "../types";
 import {FoodResponseType} from "../../api/types";
-import {FetchFoodsTC, FetchOneFoodTC} from "./food.actions";
+import {AddToFavoritesTC, FetchFoodsTC, FetchOneFoodTC} from "./food.actions";
 
 const initialState: CartSliceStateType = {
   foods: [],
@@ -41,6 +41,22 @@ export const FoodSlice = createSlice({
       .addCase(FetchOneFoodTC.rejected, state => {
         state.status = StatusEnum.ERROR
         state.food = null
+      })
+
+    //add to favorites
+      .addCase(AddToFavoritesTC.pending, state =>  {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(AddToFavoritesTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        const food = state.foods.find(obj => obj.id === action.payload.id)
+
+        if (food) {
+          food.favorites = action.payload.favorites
+        }
+      })
+      .addCase(AddToFavoritesTC.rejected, state =>  {
+        state.status = StatusEnum.ERROR
       })
   }
 })
