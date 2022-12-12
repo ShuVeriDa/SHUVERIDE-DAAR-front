@@ -54,7 +54,7 @@ export const CommentItem: FC<CommentItemPropsType & CommentsResponseType> = (
 
       }
       <div className={styles.svg}>
-        {!isEdit && (authorizedUserId === user.id || isAdmin) &&
+        {!isEdit && (authorizedUserId === user.id) &&
           <EditCommentSVG styles={styles.svgItem} onClick={() => onClickShow(true)}/>}
         {(authorizedUserId === user.id || isAdmin) && <RemoveCommentSVG onClick={onClickRemove} styles={styles.svgItem}/>}
       </div>

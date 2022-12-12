@@ -1,8 +1,23 @@
 .profile {
   display: flex;
   align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 1px;
+  
+  &:hover {
+    cursor: pointer;
+    .image {
+      border: 1px solid red;
+
+    }
+  }
+
   .image {
     width: 40px;
+    padding: 1px;
+    border: 1px solid transparent;
+    border-radius: 50%;
   }
 
   .nick {

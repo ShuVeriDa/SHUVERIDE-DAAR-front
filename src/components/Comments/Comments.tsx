@@ -1,11 +1,9 @@
-import {ChangeEvent, FC, RefObject, useEffect, useRef} from 'react';
+import {ChangeEvent, FC, useEffect, useRef} from 'react';
 import styles from './Comments.module.scss'
 import {CommentItem} from "../CommentItem/CommentItem";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
-import {
-  setValueComment,
-} from "../../redux/comment/commentSlice";
+import {setValueComment,} from "../../redux/comment/commentSlice";
 import {CreateCommentType, UpdateCommentType} from "../../api/types";
 import {AddCommentSVG} from "../SvgComponent";
 import {
