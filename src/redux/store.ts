@@ -7,7 +7,7 @@ import {rootReducer} from "./reducers";
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['filter']
+  blacklist: ['filter', 'user']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
@@ -21,8 +21,8 @@ export const store = configureStore({
     })
 })
 
-export const persistor = persistStore(store)
 
+export const persistor = persistStore(store)
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export type RootState = ReturnType<typeof store.getState>

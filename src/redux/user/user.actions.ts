@@ -3,6 +3,7 @@ import {IAuthResponse} from "./auth.interface";
 import {LoginType, RegisterType} from "../../api/types";
 import {AuthAPI} from "../../api/authAPI";
 import {errorCatch} from "../../api/api.helpers";
+import {saveToStorage} from "../../api/auth.helpers";
 
 export const registerTC = createAsyncThunk<IAuthResponse, RegisterType>('auth/register', async (data, thunkAPI) => {
     try {

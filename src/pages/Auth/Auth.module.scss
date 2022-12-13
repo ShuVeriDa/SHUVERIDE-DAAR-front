@@ -16,4 +16,16 @@
     align-items: center;
   }
 
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .anotherBtn {
+      background: #0a800a;
+      &:hover {
+        background: #096c09;
+      }
+    }
+  }
 }

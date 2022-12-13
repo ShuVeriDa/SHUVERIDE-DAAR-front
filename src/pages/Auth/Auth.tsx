@@ -10,6 +10,7 @@ import {loginTC, registerTC} from "../../redux/user/user.actions";
 import {useNavigate} from "react-router-dom";
 import {Register} from "../../components/Register/Register";
 import {Simulate} from "react-dom/test-utils";
+import {SubmitButton} from "../../components/Buttons/SubmitButton/SubmitButton";
 
 interface IAuthProps {
 }
@@ -60,7 +61,14 @@ export const Auth: FC<IAuthProps> = () => {
 
             />
           }
+          <div className={styles.buttons}>
+            <SubmitButton status={status} classes={type === 'register' ? styles.anotherBtn : ''} onSelectType={() => onSelectType('login')}
+                          title={"Авторизоваться"}/>
+            <SubmitButton status={status} classes={type === 'login' ? styles.anotherBtn : ''} onSelectType={() => onSelectType('register')} title={"Зарегистрироватся"}/>
+          </div>
+
         </form>
+
       </div>
 
     </div>

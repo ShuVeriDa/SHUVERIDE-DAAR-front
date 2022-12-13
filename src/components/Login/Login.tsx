@@ -42,10 +42,6 @@ export const Login: FC<ILoginProps> = ({register, isPasswordRequired = false, fo
              type={'password'}
              error={errors.password}
       />
-      <div className={styles.buttons}>
-        <SubmitButton status={status} classes={styles.anotherBtn} onSelectType={() => onSelectType("register")} title={"Зарегистрироватся"}/>
-        <SubmitButton status={status} title={"Авторизоваться"}/>
-      </div>
     </div>
   );
 };

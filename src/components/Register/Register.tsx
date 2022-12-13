@@ -67,12 +67,6 @@ export const Register: FC<IRegisterProps> = ({
         {/*<input type="file" accept='image/*'/>*/}
         <Input {...register('avatar')} title={'Photo'} type={'avatar'}/>
       </div>
-      <div className={styles.buttons}>
-        <SubmitButton status={status} classes={styles.anotherBtn} onSelectType={() => onSelectType('login')}
-                      title={"Авторизоваться"}/>
-        <SubmitButton status={status} title={"Зарегистрироватся"}/>
-      </div>
-
     </div>
   );
 };
