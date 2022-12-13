@@ -12,9 +12,10 @@ interface ILoginProps {
   formState: FormState<any>
   isPasswordRequired?: boolean
   status: StatusEnum
+  onSelectType: (type: 'login' | 'register') => void
 }
 
-export const Login: FC<ILoginProps> = ({register, isPasswordRequired = false, formState: {errors}, status}) => {
+export const Login: FC<ILoginProps> = ({register, isPasswordRequired = false, formState: {errors}, status, onSelectType}) => {
   return (
     <div>
       <h2 className={styles.title}>Авторизация</h2>
@@ -41,8 +42,10 @@ export const Login: FC<ILoginProps> = ({register, isPasswordRequired = false, fo
              type={'password'}
              error={errors.password}
       />
-      <SubmitButton status={status} title={"Авторизоваться"}/>
-      {/*<SubmitButton status={status} title={"Регистрация"}/>*/}
+      <div className={styles.buttons}>
+        <SubmitButton status={status} classes={styles.anotherBtn} onSelectType={() => onSelectType("register")} title={"Зарегистрироватся"}/>
+        <SubmitButton status={status} title={"Авторизоваться"}/>
+      </div>
     </div>
   );
 };

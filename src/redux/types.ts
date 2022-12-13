@@ -5,7 +5,10 @@ export enum StatusEnum {
   ERROR = 'error'
 }
 
-export type LoginInputType = {
-  email: string
-  password: string
+export type AuthInputType = {
+  nickName: string,
+  email: string,
+  password: string,
+  isAdmin: boolean,
+  avatar: string
 }

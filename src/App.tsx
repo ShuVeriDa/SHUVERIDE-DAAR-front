@@ -6,7 +6,7 @@ import './scss/app.scss';
 import {MainLayout} from "./layouts/MainLayout";
 import {Home} from "./pages/Home";
 import {Cart} from "./pages/Cart";
-import {Auth} from "./components/Auth/Auth";
+import {Auth} from "./pages/Auth/Auth";
 
 
 // const Cart = Loadable({
