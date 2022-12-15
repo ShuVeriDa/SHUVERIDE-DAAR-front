@@ -27,7 +27,7 @@ export const Profile: FC<IProfileProps> = ({user}) => {
   return (
     <a className={styles.profile} onClick={onClickLogOut}>
       <span className={ cn(user.isAdmin ? styles.admin : styles.nick)} >{user.nickName}</span>
-      <img src={defaultAvatar} className={styles.image} alt=""/>
+      <img src={user.avatar || defaultAvatar} className={styles.image} alt=""/>
     </a>
   );
 };

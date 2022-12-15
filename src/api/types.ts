@@ -94,3 +94,12 @@ export type LoginType = {
   password: string
 }
 
+export type UploadFileResponseType = {
+  url: string,
+  name: string
+}
+
+export type UploadType = {
+  folderName: string
+  file: FormData
+}

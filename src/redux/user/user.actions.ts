@@ -1,9 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {IAuthResponse} from "./auth.interface";
-import {LoginType, RegisterType} from "../../api/types";
+import {LoginType, RegisterType, UploadFileResponseType, UploadType} from "../../api/types";
 import {AuthAPI} from "../../api/authAPI";
 import {errorCatch} from "../../api/api.helpers";
 import {saveToStorage} from "../../api/auth.helpers";
+import {UploadFileAPI} from "../../api/uploadFileAPI";
 
 export const registerTC = createAsyncThunk<IAuthResponse, RegisterType>('auth/register', async (data, thunkAPI) => {
     try {
@@ -34,11 +35,20 @@ export const chechAuthTC = createAsyncThunk<IAuthResponse>('auth/check-auth', as
       return res.data
     } catch (error) {
       if (errorCatch(error) === 'jwt expired') {
-        throw new Error('Your authorization is finished, please sign in again')
         thunkAPI.dispatch(logoutTC())
+        throw new Error('Your authorization is finished, please sign in again')
       }
 
       return thunkAPI.rejectWithValue(error)
     }
   }
 )
+
+export const uploadImageUserTC = createAsyncThunk<UploadFileResponseType, UploadType>('auth/uploadImage', async (data) => {
+  try {
+    const res = await UploadFileAPI.uploadFile(data)
+    return res.data
+  } catch (error) {
+    throw new Error("Failed to upload photo")
+  }
+})

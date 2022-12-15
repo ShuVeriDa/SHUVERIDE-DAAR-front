@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {ChangeEvent, FC, useEffect, useState} from 'react';
 
 import styles from './Auth.module.scss';
 import {Login} from "../../components/Login/Login";
@@ -6,7 +6,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {useDispatch} from "react-redux";
 import {AuthInputType} from "../../redux/types";
-import {loginTC, registerTC} from "../../redux/user/user.actions";
+import {loginTC, registerTC, uploadImageUserTC} from "../../redux/user/user.actions";
 import {useNavigate} from "react-router-dom";
 import {Register} from "../../components/Register/Register";
 import {Simulate} from "react-dom/test-utils";
@@ -21,14 +21,21 @@ export const Auth: FC<IAuthProps> = () => {
 
   const [type, setType] = useState<'login' | 'register'>('login')
 
-  const {status, user} = useAppSelector(state => state.user)
+  const {status, user, images} = useAppSelector(state => state.user)
   const {register: registerInput, handleSubmit, formState, reset} = useForm<AuthInputType>({mode: "onChange"})
 
+  console.log(images, "avatarUrl")
   const onSubmit: SubmitHandler<AuthInputType> = (data) => {
-    if(type === 'login') dispatch(loginTC(data))
-    else if(type === 'register') dispatch(registerTC({...data, isAdmin: JSON.parse(String(data.isAdmin))}))
 
-    console.log(data)
+
+    if (type === 'login') dispatch(loginTC(data))
+    else if (type === 'register') dispatch(registerTC({
+      ...data,
+      avatar: data.avatar[0].url,
+      isAdmin: JSON.parse(String(data.isAdmin))
+    }))
+
+    console.log(data.avatar)
     reset()
   }
 
@@ -40,6 +47,18 @@ export const Auth: FC<IAuthProps> = () => {
 
   const onSelectType = (type: 'login' | 'register') => {
     setType(type)
+  }
+
+  const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const formData = new FormData()
+    if (event.currentTarget.files) {
+      formData.append('file', event.currentTarget.files[0])
+      dispatch(uploadImageUserTC({folderName: "user", file: formData}))
+      console.log(formData)
+    }
+
+
   }
 
   return (
@@ -58,13 +77,16 @@ export const Auth: FC<IAuthProps> = () => {
                         isPasswordRequired
                         status={status}
                         onSelectType={onSelectType}
+                        handleChangeImage={handleChangeImage}
 
             />
           }
           <div className={styles.buttons}>
-            <SubmitButton status={status} classes={type === 'register' ? styles.anotherBtn : ''} onSelectType={() => onSelectType('login')}
+            <SubmitButton status={status} classes={type === 'register' ? styles.anotherBtn : ''}
+                          onSelectType={() => onSelectType('login')}
                           title={"Авторизоваться"}/>
-            <SubmitButton status={status} classes={type === 'login' ? styles.anotherBtn : ''} onSelectType={() => onSelectType('register')} title={"Зарегистрироватся"}/>
+            <SubmitButton status={status} classes={type === 'login' ? styles.anotherBtn : ''}
+                          onSelectType={() => onSelectType('register')} title={"Зарегистрироватся"}/>
           </div>
 
         </form>

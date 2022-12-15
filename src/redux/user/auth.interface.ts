@@ -1,5 +1,6 @@
 import {UserType} from "../../api/user.types";
 import {StatusEnum} from "../types";
+import {UploadFileResponseType} from "../../api/types";
 
 export interface ITokens {
   accessToken: string
@@ -29,4 +30,5 @@ export interface IEmailPassword {
 export interface IInitialState {
   user: IUserState | null
   status: StatusEnum
+  images: UploadFileResponseType
 }

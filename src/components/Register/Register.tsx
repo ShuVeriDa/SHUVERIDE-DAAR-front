@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {ChangeEvent, FC, useState} from 'react';
 
 import styles from './Register.module.scss';
 import {Input} from "../Input/Input";
@@ -6,6 +6,10 @@ import {SubmitButton} from "../Buttons/SubmitButton/SubmitButton";
 import {StatusEnum} from "../../redux/types";
 import {validEmail} from "../../utils/regex";
 import {FormState, UseFormRegister} from "react-hook-form";
+import {uploadImageUserTC} from "../../redux/user/user.actions";
+import {useDispatch} from "react-redux";
+import {AppDispatchType} from "../../redux/store";
+import {UploadFileAPI} from "../../api/uploadFileAPI";
 
 interface IRegisterProps {
   register: UseFormRegister<any>
@@ -13,15 +17,22 @@ interface IRegisterProps {
   isPasswordRequired?: boolean
   status: StatusEnum
   onSelectType: (type: 'login' | 'register') => void
+  handleChangeImage: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Register: FC<IRegisterProps> = ({
-                                               register,
-                                               isPasswordRequired = false,
-                                               formState: {errors},
-                                               status,
-                                               onSelectType
-                                             }) => {
+export const Register: FC<IRegisterProps> = (
+  {
+    register,
+    isPasswordRequired = false,
+    formState: {errors},
+    status,
+    onSelectType,
+    handleChangeImage
+  }) => {
+
+  const dispatch = useDispatch<AppDispatchType>()
+
+
   return (
     <div>
       <h2 className={styles.title}>Регистрация</h2>
@@ -64,8 +75,8 @@ export const Register: FC<IRegisterProps> = ({
         <option value="true">Admin</option>
       </select>
       <div>
-        {/*<input type="file" accept='image/*'/>*/}
-        <Input {...register('avatar')} title={'Photo'} type={'avatar'}/>
+        <input type="file" accept='image/*'  {...register('avatar')} onChange={handleChangeImage}/>
+        {/*<Input {...register('avatar')} title={'Photo'} type={'avatar'}/>*/}
       </div>
     </div>
   );

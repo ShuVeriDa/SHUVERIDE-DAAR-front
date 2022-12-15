@@ -1,3 +1,5 @@
+import {UploadFileResponseType} from "../api/types";
+
 export enum StatusEnum {
   IDLE = 'idle',
   LOADING = 'loading',
@@ -10,5 +12,5 @@ export type AuthInputType = {
   email: string,
   password: string,
   isAdmin: boolean,
-  avatar: string
+  avatar: UploadFileResponseType[]
 }
