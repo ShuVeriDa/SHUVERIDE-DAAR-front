@@ -9,6 +9,9 @@ import {CreateFoodType} from "../../api/types";
 import {CreateFoodTC} from "../../redux/food/food.actions";
 import {Input} from "../../components/Input/Input";
 import {useNavigate} from "react-router-dom";
+import {Select} from "../../components/Select/Select";
+import {foodCategories, foodNameTypes, foodOptions, foodValueSizes, foodValueTypes} from "../../utils/helpers";
+import {Checkbox} from "../../components/Checkbox/Checkbox";
 
 interface IAuthProps {
 }
@@ -32,6 +35,8 @@ export const CreateFood: FC<IAuthProps> = () => {
       liters: Number(data.liters)
     }))
 
+    console.log(data)
+
     navigate('/')
     reset()
   }
@@ -46,7 +51,7 @@ export const CreateFood: FC<IAuthProps> = () => {
     <div className={styles.create}>
       <div className={styles.createContainer}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h2>Добавление Еды</h2>
+          <h2 className={styles.title}>Добавление Еды</h2>
           <Input {...register('title', {
             required: "Title is required",
             minLength: {
@@ -62,57 +67,14 @@ export const CreateFood: FC<IAuthProps> = () => {
                  title={'Цена'}
                  type={'number'}
                  error={formState.errors.price}
+                 classes={styles.price}
           />
-          <div>
-            <span>Выберите род еды: </span>
-            <select {...register('kind')} onChange={onClickKindFood}>
-              <option value={0}>Пицца</option>
-              <option value={1}>Напитки</option>
-            </select>
-          </div>
-          <div>
-            <span>Выберите категорию: </span>
-            <select {...register('category')}>
-              <option value={0}>Все</option>
-              <option value={1}>Мясные</option>
-              <option value={2}>Вегетерианские</option>
-              <option value={3}>Гриль</option>
-              <option value={4}>Острые</option>
-              <option value={5}>Закрытые</option>
-            </select>
-          </div>
+          <Select title={"Выберите род еды:"} type={"kind"} options={foodOptions} register={register} onChange={onClickKindFood}/>
+          <Select title={"Выберите категорию:"} type={"category"} options={foodCategories} register={register} />
           {kindFood === '0' ?
             <>
-              <div>
-                <span>Выберите тип пиццы: </span>
-                <ul>
-                  <li>
-                    <span>Традиционное</span>
-                    <input {...register('types')} type={'checkbox'} value={0}/>
-                  </li>
-                  <li>
-                    <span>Тонкое</span>
-                    <input {...register('types')} type={'checkbox'} value={1}/>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <span>Выберите размер пиццы: </span>
-                <ul>
-                  <li>
-                    <span>26</span>
-                    <input {...register('sizes')} type={'checkbox'} value={26}/>
-                  </li>
-                  <li>
-                    <span>30</span>
-                    <input {...register('sizes')} type={'checkbox'} value={30}/>
-                  </li>
-                  <li>
-                    <span>40</span>
-                    <input {...register('sizes')} type={'checkbox'} value={40}/>
-                  </li>
-                </ul>
-              </div>
+              <Checkbox title={'Выберите тип пиццы:'} name={foodNameTypes} type={'types'} options={foodValueTypes} register={register} />
+              <Checkbox title={'Выберите размер пиццы: '} name={foodValueSizes} type={'sizes'} options={foodValueSizes} register={register} />
             </>
             : <>
               <Input {...register('liters')} title={'Литр'} type={'number'} step={"any"}/>
