@@ -7,6 +7,7 @@ import {MainLayout} from "./layouts/MainLayout";
 import {Home} from "./pages/Home";
 import {Cart} from "./pages/Cart";
 import {Auth} from "./pages/Auth/Auth";
+import {CreateFood} from "./pages/CreateFood/CreateFood";
 
 
 // const Cart = Loadable({
@@ -29,6 +30,7 @@ function App() {
   return (
     <Routes>
       <Route path={'/auth'} element={<Auth/>}/>
+      <Route path={'create'} element={<CreateFood />}/>
       <Route path={'/'} element={<MainLayout/>}>
         <Route path={''} element={<Home/>}/>
 

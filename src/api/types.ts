@@ -112,8 +112,8 @@ export type CreateFoodType = {
   category?: number;
   rating?: number;
   liters?: number | null;
-  types?: number[] | null;
-  sizes?: number[] | null;
+  types?: number[]  | null;
+  sizes?: number[]  | null;
 }
 
 export type UpdateFoodType = CreateFoodType

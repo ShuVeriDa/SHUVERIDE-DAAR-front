@@ -4,7 +4,7 @@ import {StatusEnum} from "../../../redux/types";
 import cn from "classnames";
 interface ISubmitButtonProps {
   title: string
-  status: StatusEnum
+  status?: StatusEnum
   onSelectType?: () => void
   classes?: string
 }

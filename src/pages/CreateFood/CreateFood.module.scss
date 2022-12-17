@@ -1,0 +1,31 @@
+.create {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  .createContainer {
+    padding: 20px;
+    width: 500px;
+    min-height: 500px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .anotherBtn {
+      background: #0a800a;
+      &:hover {
+        background: #096c09;
+      }
+    }
+  }
+}
