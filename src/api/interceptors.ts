@@ -2,13 +2,12 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {errorCatch, getContentType} from "./api.helpers";
 
-
 export const axiosClassic = axios.create({
-  baseURL: 'http://localhost:4300/',
+  baseURL: process.env.REACT_APP_URL,
   headers: getContentType(),
 })
 export const instance = axios.create({
-  baseURL: 'http://localhost:4300/',
+  baseURL: process.env.REACT_APP_URL,
   headers: getContentType()
 })
 

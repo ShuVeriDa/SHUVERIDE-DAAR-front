@@ -26,8 +26,6 @@ export const Auth: FC<IAuthProps> = () => {
 
   console.log(images, "avatarUrl")
   const onSubmit: SubmitHandler<AuthInputType> = (data) => {
-
-
     if (type === 'login') dispatch(loginTC(data))
     else if (type === 'register') dispatch(registerTC({
       ...data,

@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {FoodResponseType, SearchFoodParamsType} from "../../api/types";
+import {CreateFoodType, FoodResponseType, SearchFoodParamsType, UpdateFoodType} from "../../api/types";
 import {foodAPI} from "../../api/foodAPI";
 
 export const FetchFoodsTC = createAsyncThunk<{ foods: FoodResponseType[] }, SearchFoodParamsType>('food/fetchFoods', async (params) => {
@@ -16,6 +16,33 @@ export const FetchOneFoodTC = createAsyncThunk<FoodResponseType, string>('food/f
     return data
   } catch (error) {
     throw new Error(`Failed to get one food`)
+  }
+})
+
+export const CreateFoodTC = createAsyncThunk<FoodResponseType, CreateFoodType>(`food/createFood`, async (data) => {
+  try {
+    const res = await foodAPI.createFood(data)
+    return res.data
+  } catch (error) {
+    throw new Error(`Failed to create food`)
+  }
+})
+
+export const UpdateFoodTC = createAsyncThunk<FoodResponseType, { id: string, data: UpdateFoodType }>(`food/updateFood`, async ({id, data}) => {
+  try {
+    const res = await foodAPI.updateFood(id, data)
+    return res.data
+  } catch (error) {
+    throw new Error(`Failed to update food`)
+  }
+})
+
+export const RemoveFoodTC = createAsyncThunk(`food/removeFood`, async (id: string) => {
+  try {
+    const res = await foodAPI.removeFood(id)
+    return res.data
+  } catch (error) {
+    throw new Error(`Failed to remove`)
   }
 })
 

@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {StatusEnum} from "../types";
 import {FoodResponseType} from "../../api/types";
-import {AddToFavoritesTC, FetchFoodsTC, FetchOneFoodTC} from "./food.actions";
+import {AddToFavoritesTC, CreateFoodTC, FetchFoodsTC, FetchOneFoodTC, RemoveFoodTC, UpdateFoodTC} from "./food.actions";
 
 const initialState: CartSliceStateType = {
   foods: [],
@@ -41,6 +41,48 @@ export const FoodSlice = createSlice({
       .addCase(FetchOneFoodTC.rejected, state => {
         state.status = StatusEnum.ERROR
         state.food = null
+      })
+
+      //CreateFood
+      .addCase(CreateFoodTC.pending, state => {
+        state.status = StatusEnum.LOADING
+        state.foods = []
+      })
+      .addCase(CreateFoodTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.foods.push(action.payload)
+      })
+      .addCase(CreateFoodTC.rejected, state => {
+        state.status = StatusEnum.ERROR
+      })
+
+      //UpdateFood
+      .addCase(UpdateFoodTC.pending, state => {
+        state.status = StatusEnum.LOADING
+        state.foods = []
+      })
+      .addCase(UpdateFoodTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        let food = state.foods.find(obj => obj.id === action.payload.id)
+
+        if (food) {
+          food = action.payload
+        }
+      })
+      .addCase(UpdateFoodTC.rejected, state => {
+        state.status = StatusEnum.ERROR
+      })
+
+      //RemoveFood
+      .addCase(RemoveFoodTC.pending, state => {
+        state.status = StatusEnum.LOADING
+      })
+      .addCase(RemoveFoodTC.fulfilled, (state, action) => {
+        state.status = StatusEnum.SUCCESS
+        state.foods = state.foods.filter(obj => obj.id !== action.payload.id)
+      })
+      .addCase(RemoveFoodTC.rejected, state => {
+        state.status = StatusEnum.ERROR
       })
 
     //add to favorites

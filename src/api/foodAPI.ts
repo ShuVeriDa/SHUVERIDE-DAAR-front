@@ -1,5 +1,5 @@
 import {axiosClassic, instance} from "./interceptors";
-import {FoodResponseType, SearchFoodParamsType} from "./types";
+import {CreateFoodType, FoodResponseType, SearchFoodParamsType, UpdateFoodType} from "./types";
 
 export const foodAPI = {
   fetchFoods : (params: SearchFoodParamsType) => {
@@ -8,6 +8,12 @@ export const foodAPI = {
   },
   fetchOneFood: (id: string) => {
     return axiosClassic.get<FoodResponseType>(`foods/${id}`)
+  },
+  createFood: (data: CreateFoodType) => {
+    return instance.post<FoodResponseType>(`foods`, data)
+  },
+  updateFood: (id: string, data: UpdateFoodType) => {
+    return instance.put<FoodResponseType>(`foods/${id}`, data)
   },
   removeFood: (id: string) => {
     return instance.delete<FoodResponseType>(`foods/${id}`)

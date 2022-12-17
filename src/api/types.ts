@@ -103,3 +103,17 @@ export type UploadType = {
   folderName: string
   file: FormData
 }
+
+export type CreateFoodType = {
+  imageUrl: string;
+  title: string;
+  price: number;
+  kind: number;
+  category?: number;
+  rating?: number;
+  liters?: number | null;
+  types?: number[] | null;
+  sizes?: number[] | null;
+}
+
+export type UpdateFoodType = CreateFoodType

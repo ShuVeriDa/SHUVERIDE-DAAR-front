@@ -19,6 +19,8 @@ interface IProfileProps {
 
 export const Profile: FC<IProfileProps> = ({user}) => {
   const dispatch = useDispatch<AppDispatchType>()
+
+  const userAvatar = process.env.REACT_APP_URL + user.avatar.replace('/uploads', 'uploads')
   const onClickLogOut = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     dispatch(logoutTC())
@@ -27,7 +29,7 @@ export const Profile: FC<IProfileProps> = ({user}) => {
   return (
     <a className={styles.profile} onClick={onClickLogOut}>
       <span className={ cn(user.isAdmin ? styles.admin : styles.nick)} >{user.nickName}</span>
-      <img src={user.avatar || defaultAvatar} className={styles.image} alt=""/>
+      <img src={userAvatar || defaultAvatar} className={styles.image} alt=""/>
     </a>
   );
 };
