@@ -1,3 +1,48 @@
+.foodContainer {
+
+  &:hover {
+    .UDFood {
+      visibility: visible;
+    }
+  }
+
+  .UDFood {
+    position: relative;
+    top: 25px;
+    left: 228px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    visibility: hidden;
+
+    width: 50px;
+
+
+
+    .editFood, .removeFood {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .editFood {
+      fill: #f8bf58;
+
+      &:hover {
+        fill: #e19101;
+      }
+    }
+
+    .removeFood {
+      fill: #ef7575;
+
+      &:hover {
+        fill: #bb0303;
+      }
+    }
+  }
+}
+
 .image {
   img {
     width: 260px;
@@ -19,5 +64,7 @@
     }
   }
 }
+
+
 
 

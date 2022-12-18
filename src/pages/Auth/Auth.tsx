@@ -9,7 +9,6 @@ import {AuthInputType} from "../../redux/types";
 import {loginTC, registerTC, uploadImageUserTC} from "../../redux/user/user.actions";
 import {useNavigate} from "react-router-dom";
 import {Register} from "../../components/Register/Register";
-import {Simulate} from "react-dom/test-utils";
 import {SubmitButton} from "../../components/Buttons/SubmitButton/SubmitButton";
 
 interface IAuthProps {

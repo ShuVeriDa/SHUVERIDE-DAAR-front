@@ -6,8 +6,12 @@ import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
 import {FoodResponseType} from "../../api/types";
-import {AddButtonSVG} from "../SvgComponent";
+import {AddButtonSVG, EditCommentSVG, EditFoodSVG, RemoveCommentSVG, RemoveFoodSVG} from "../SvgComponent";
 import {FoodConfig} from "../FoodConfig/FoodConfig";
+
+import styles from './FoodBlock.module.scss';
+import cn from "classnames";
+import {RemoveFoodTC} from "../../redux/food/food.actions";
 
 const typesName = ['тонкое', "традиционное"]
 
@@ -17,6 +21,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
   {
     title, price, types, id, sizes, imageUrl, liters, views, favorites, rating,
   }) => {
+  const {user} = useAppSelector(state => state.user)
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))
   const [activeType, setActiveType] = useState<number>(0)
@@ -39,10 +44,23 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
     dispatch(addItem(item))
   }
 
+  const onClickRemoveFood = () => {
+    if (window.confirm('Вы действительно хотите удалить ?')) {
+      dispatch(RemoveFoodTC(id))
+    }
+  }
+
 
   return (
     <div className='pizzaBlockWrapper'>
-      <div className="pizzaBlock">
+      <div className={cn(styles.foodContainer, "pizzaBlock")}>
+        {user?.isAdmin && <div className={styles.UDFood}>
+          <EditFoodSVG styles={styles.editFood}/>
+          <RemoveFoodSVG onClick={onClickRemoveFood} styles={styles.removeFood}/>
+        </div>
+
+        }
+
         <Link to={`/food/${id}`}>
           <img className="pizzaBlockImage"
                src={imageUrl}
@@ -61,11 +79,11 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
                     favorites={favorites}
                     views={views}
                     id={id}
-                    />
+        />
         <div className="pizzaBlockBottom">
           <div className="pizzaBlockPrice">от {price} ₽</div>
           <button onClick={onClickAdd} className="button buttonOutline buttonAdd">
-           <AddButtonSVG />
+            <AddButtonSVG/>
             <span>Добавить</span>
             {addedCount > 0 && <i>{addedCount}</i>}
           </button>

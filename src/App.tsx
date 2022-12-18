@@ -30,7 +30,7 @@ function App() {
   return (
     <Routes>
       <Route path={'/auth'} element={<Auth/>}/>
-      <Route path={'create'} element={<CreateFood />}/>
+      <Route path={'/create'} element={<CreateFood />}/>
       <Route path={'/'} element={<MainLayout/>}>
         <Route path={''} element={<Home/>}/>
 
