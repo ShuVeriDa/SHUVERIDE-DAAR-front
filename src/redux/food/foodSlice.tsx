@@ -43,7 +43,7 @@ export const FoodSlice = createSlice({
         state.food = null
       })
 
-      //CreateFood
+      //UpdateFood
       .addCase(CreateFoodTC.pending, state => {
         state.status = StatusEnum.LOADING
         state.foods = []

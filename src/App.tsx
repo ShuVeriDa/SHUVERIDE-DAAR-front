@@ -8,6 +8,7 @@ import {Home} from "./pages/Home";
 import {Cart} from "./pages/Cart";
 import {Auth} from "./pages/Auth/Auth";
 import {CreateFood} from "./pages/CreateFood/CreateFood";
+import {UpdateFood} from "./pages/UpdateFood/UpdateFood";
 
 
 // const Cart = Loadable({
@@ -31,6 +32,7 @@ function App() {
     <Routes>
       <Route path={'/auth'} element={<Auth/>}/>
       <Route path={'/create'} element={<CreateFood />}/>
+      <Route path={'/update/:id'} element={<UpdateFood />}/>
       <Route path={'/'} element={<MainLayout/>}>
         <Route path={''} element={<Home/>}/>
 
