@@ -34,7 +34,7 @@ function App() {
       <Route path={'/create'} element={<CreateFood />}/>
       <Route path={'/update/:id'} element={<UpdateFood />}/>
       <Route path={'/'} element={<MainLayout/>}>
-        <Route path={''} element={<Home/>}/>
+        <Route path={'/'} element={<Home/>}/>
 
         <Route path={'cart'}
                element={

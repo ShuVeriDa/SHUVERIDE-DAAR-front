@@ -59,15 +59,13 @@ export const FoodSlice = createSlice({
       //UpdateFood
       .addCase(UpdateFoodTC.pending, state => {
         state.status = StatusEnum.LOADING
-        state.foods = []
       })
       .addCase(UpdateFoodTC.fulfilled, (state, action) => {
         state.status = StatusEnum.SUCCESS
         let food = state.foods.find(obj => obj.id === action.payload.id)
 
-        if (food) {
+        if (food)
           food = action.payload
-        }
       })
       .addCase(UpdateFoodTC.rejected, state => {
         state.status = StatusEnum.ERROR

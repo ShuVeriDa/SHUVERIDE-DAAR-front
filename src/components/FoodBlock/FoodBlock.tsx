@@ -1,12 +1,12 @@
 import {FC, useState} from 'react';
 
-import {Link} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {addItem, CartItemType} from "../../redux/cart/cartSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {selectCartItemById} from "../../redux/cart/cartSelector";
 import {FoodResponseType} from "../../api/types";
-import {AddButtonSVG, EditCommentSVG, EditFoodSVG, RemoveCommentSVG, RemoveFoodSVG} from "../SvgComponent";
+import {AddButtonSVG, EditFoodSVG, RemoveFoodSVG} from "../SvgComponent";
 import {FoodConfig} from "../FoodConfig/FoodConfig";
 
 import styles from './FoodBlock.module.scss';
@@ -21,6 +21,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
   {
     title, price, types, id, sizes, imageUrl, liters, views, favorites, rating,
   }) => {
+  const navigate = useNavigate()
   const {user} = useAppSelector(state => state.user)
   const dispatch = useDispatch<AppDispatchType>()
   const cartItem = useAppSelector(selectCartItemById(id))
@@ -50,12 +51,13 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
     }
   }
 
-
   return (
     <div className='pizzaBlockWrapper'>
       <div className={cn(styles.foodContainer, "pizzaBlock")}>
         {user?.isAdmin && <div className={styles.UDFood}>
-          <EditFoodSVG styles={styles.editFood}/>
+          <NavLink to={`update/${id}`}>
+            <EditFoodSVG styles={styles.editFood}/>
+          </NavLink>
           <RemoveFoodSVG onClick={onClickRemoveFood} styles={styles.removeFood}/>
         </div>
 

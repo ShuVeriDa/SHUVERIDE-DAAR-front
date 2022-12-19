@@ -10,13 +10,14 @@ interface ISelectProps {
   register: UseFormRegister<any>
   formState?: FormState<any>
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
+  value?: number | string
 }
 
-export const Select: FC<ISelectProps> = ({register, type, onChange, options, title, formState}) => {
+export const Select: FC<ISelectProps> = ({register, type, value, onChange, options, title, formState}) => {
   return (
     <div>
       <span>{title}</span>
-      <select {...register(type)} onChange={onChange}>
+      <select {...register(type)} onChange={onChange} value={value}>
         {options.map((obj, i) => <option key={i} value={i}>{obj}</option>)}
       </select>
     </div>
