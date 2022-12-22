@@ -12,5 +12,5 @@ export type AuthInputType = {
   email: string,
   password: string,
   isAdmin: boolean,
-  avatar: UploadFileResponseType[]
+  avatar: string
 }

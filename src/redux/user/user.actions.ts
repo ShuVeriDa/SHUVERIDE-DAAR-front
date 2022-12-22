@@ -29,7 +29,7 @@ export const loginTC = createAsyncThunk<IAuthResponse, LoginType>('auth/login', 
 export const logoutTC = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   await AuthAPI.logout()
 })
-export const chechAuthTC = createAsyncThunk<IAuthResponse>('auth/check-auth', async (_, thunkAPI) => {
+export const checkAuthTC = createAsyncThunk<IAuthResponse>('auth/check-auth', async (_, thunkAPI) => {
     try {
       const res = await AuthAPI.getNewTokens()
       return res.data
@@ -44,10 +44,10 @@ export const chechAuthTC = createAsyncThunk<IAuthResponse>('auth/check-auth', as
   }
 )
 
-export const uploadImageUserTC = createAsyncThunk<UploadFileResponseType, UploadType>('auth/uploadImage', async (data) => {
+export const uploadImageUserTC = createAsyncThunk<string, UploadType>('auth/uploadImage', async (data) => {
   try {
-    const res = await UploadFileAPI.uploadFile(data)
-    return res.data
+    const res = await UploadFileAPI.uploadFile(data.file, data.folder)
+    return res.data[0].url
   } catch (error) {
     throw new Error("Failed to upload photo")
   }

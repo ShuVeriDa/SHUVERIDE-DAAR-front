@@ -27,8 +27,6 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
       }
     }
 
-    console.log(value)
-
     return (
       <div className={cn(styles.input, classes)}>
         <input className={cn(value ? styles.isValue : '')} type={type} ref={ref} value={value} {...rest} onChange={onChangeHandler} step={step}/>

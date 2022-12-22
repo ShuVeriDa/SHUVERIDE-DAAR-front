@@ -100,8 +100,8 @@ export type UploadFileResponseType = {
 }
 
 export type UploadType = {
-  folderName: string
   file: FormData
+  folder?: string
 }
 
 export type CreateFoodType = {

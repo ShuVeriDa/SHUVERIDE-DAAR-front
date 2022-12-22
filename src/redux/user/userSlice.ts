@@ -2,12 +2,12 @@ import {createSlice} from "@reduxjs/toolkit";
 import {StatusEnum} from "../types";
 import {getStoreLocal} from "./local-storage";
 import {IInitialState} from "./auth.interface";
-import {chechAuthTC, loginTC, logoutTC, registerTC, uploadImageUserTC} from "./user.actions";
+import {checkAuthTC, loginTC, logoutTC, registerTC, uploadImageUserTC} from "./user.actions";
 
 const initialState: IInitialState = {
   status: StatusEnum.IDLE,
   user: getStoreLocal('user'),
-  images: {name: '', url: ''}
+  image: ''
 }
 
 export const userSlice = createSlice({
@@ -49,7 +49,7 @@ export const userSlice = createSlice({
       })
 
     /*checkAuth*/
-      .addCase(chechAuthTC.fulfilled, (state, action) => {
+      .addCase(checkAuthTC.fulfilled, (state, action) => {
         state.user = action.payload.user
       })
 
@@ -59,7 +59,7 @@ export const userSlice = createSlice({
       })
       .addCase(uploadImageUserTC.fulfilled, (state, action) => {
         state.status = StatusEnum.SUCCESS
-        state.images = action.payload
+        state.image = action.payload
 
       })
       .addCase(uploadImageUserTC.rejected, state => {

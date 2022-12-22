@@ -10,6 +10,8 @@ import {loginTC, registerTC, uploadImageUserTC} from "../../redux/user/user.acti
 import {useNavigate} from "react-router-dom";
 import {Register} from "../../components/Register/Register";
 import {SubmitButton} from "../../components/Buttons/SubmitButton/SubmitButton";
+import {AuthAPI} from "../../api/authAPI";
+import {UploadFileAPI} from "../../api/uploadFileAPI";
 
 interface IAuthProps {
 }
@@ -19,22 +21,25 @@ export const Auth: FC<IAuthProps> = () => {
   const navigate = useNavigate()
 
   const [type, setType] = useState<'login' | 'register'>('login')
+  const [imageUrl, setImageUrl] = useState('')
 
-  const {status, user, images} = useAppSelector(state => state.user)
+  const {status, user} = useAppSelector(state => state.user)
   const {register: registerInput, handleSubmit, formState, reset} = useForm<AuthInputType>({mode: "onChange"})
 
-  console.log(images, "avatarUrl")
   const onSubmit: SubmitHandler<AuthInputType> = (data) => {
     if (type === 'login') dispatch(loginTC(data))
-    else if (type === 'register') dispatch(registerTC({
-      ...data,
-      avatar: data.avatar[0].url,
-      isAdmin: JSON.parse(String(data.isAdmin))
-    }))
+    else if (type === 'register')
+      dispatch(registerTC({
+        ...data,
+        avatar: imageUrl,
+        isAdmin: JSON.parse(String(data.isAdmin))
+      }))
 
     console.log(data.avatar)
     reset()
   }
+
+  console.log(imageUrl, "imageUrl")
 
   useEffect(() => {
     if (user) {
@@ -46,16 +51,20 @@ export const Auth: FC<IAuthProps> = () => {
     setType(type)
   }
 
-  const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+   const files = event.target.files
+    if(!files?.length) return
+
     const formData = new FormData()
-    if (event.currentTarget.files) {
-      formData.append('file', event.currentTarget.files[0])
-      dispatch(uploadImageUserTC({folderName: "user", file: formData}))
-      console.log(formData)
+    formData.append('file', files[0])
+    try {
+       const res = await UploadFileAPI.uploadFile(formData, 'user')
+        setImageUrl(res.data[0].url)
+    } catch (error) {
+      console.log(error)
     }
-
-
+     // dispatch(uploadImageUserTC({file: formData, folder: 'user'}))
   }
 
   return (

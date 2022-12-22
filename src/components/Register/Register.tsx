@@ -32,7 +32,6 @@ export const Register: FC<IRegisterProps> = (
 
   const dispatch = useDispatch<AppDispatchType>()
 
-
   return (
     <div>
       <h2 className={styles.title}>Регистрация</h2>
@@ -75,7 +74,7 @@ export const Register: FC<IRegisterProps> = (
         <option value="true">Admin</option>
       </select>
       <div>
-        <input type="file" accept='image/*'  {...register('avatar')} onChange={handleChangeImage}/>
+        <input type="file" {...register('avatar', { required: true })} onChange={handleChangeImage}/>
         {/*<Input {...register('avatar')} title={'Photo'} type={'avatar'}/>*/}
       </div>
     </div>
