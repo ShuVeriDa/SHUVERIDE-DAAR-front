@@ -15,8 +15,8 @@ interface ISelectProps {
 
 export const Select: FC<ISelectProps> = ({register, type, value, onChange, options, title, formState}) => {
   return (
-    <div>
-      <span>{title}</span>
+    <div className={styles.select}>
+      <span className={styles.title}>{title}</span>
       <select {...register(type)} onChange={onChange} value={value}>
         {options.map((obj, i) => <option key={i} value={i}>{obj}</option>)}
       </select>

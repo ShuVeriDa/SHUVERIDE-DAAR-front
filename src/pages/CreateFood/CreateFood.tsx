@@ -32,8 +32,8 @@ export const CreateFood: FC<IAuthProps> = () => {
       price: Number(data.price),
       kind: Number(data.kind),
       category: Number(data.category),
-      types: data.types?.map(Number),
-      sizes: data.sizes?.map(Number),
+      types: data.types ? data.types.map(Number) : null,
+      sizes: data.sizes ? data.sizes.map(Number) : null,
       liters: Number(data.liters)
     }))
 
@@ -77,21 +77,43 @@ export const CreateFood: FC<IAuthProps> = () => {
           />
 
           <input type="file" {...register('imageUrl', {required: true})} onChange={handleChangeImage}/>
-          <Select title={"Выберите род еды:"} type={"kind"} options={foodOptions} register={register} onChange={onClickKindFood}/>
-          <Select title={"Выберите категорию:"} type={"category"} options={foodCategories} register={register} />
+          <Select title={"Выберите род еды:"}
+                  type={"kind"}
+                  options={foodOptions}
+                  register={register}
+                  onChange={onClickKindFood}
+          />
+          <Select title={"Выберите категорию:"}
+                  type={"category"}
+                  options={foodCategories}
+                  register={register}
+          />
           {kindFood === '0' ?
             <>
-              <Checkbox title={'Выберите тип пиццы:'} name={foodNameTypes} type={'types'} options={foodValueTypes} register={register} />
-              <Checkbox title={'Выберите размер пиццы: '} name={foodValueSizes} type={'sizes'} options={foodValueSizes} register={register} />
+              <Checkbox title={'Выберите тип пиццы:'}
+                        name={foodNameTypes}
+                        type={'types'}
+                        options={foodValueTypes}
+                        register={register}
+              />
+              <Checkbox title={'Выберите размер пиццы: '}
+                        name={foodValueSizes}
+                        type={'sizes'}
+                        options={foodValueSizes}
+                        register={register}
+              />
             </>
             : <>
-              <Input {...register('liters')} title={'Литр'} type={'number'} step={"any"}/>
+              <Input {...register('liters')}
+                     title={'Литр'}
+                     type={'number'}
+                     step={"any"}
+              />
             </>
           }
 
           <div className={styles.buttons}>
-            <SubmitButton
-              title={"Добавить"}
+            <SubmitButton title={"Добавить"}
             />
           </div>
         </form>

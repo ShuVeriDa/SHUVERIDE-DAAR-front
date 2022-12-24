@@ -6,11 +6,13 @@ import {useAppSelector} from "../redux/store";
 import {CartSVG} from "./SvgComponent";
 import {ProfileContainer} from "./ProfileContainer/ProfileContainer";
 
+import uploadPizza from '../assets/img/pizza.png'
 
 type HeaderPropsType = {}
 
 export const Header: FC<HeaderPropsType> = () => {
   const {items, totalPrice} = useAppSelector(state => state.cart)
+  const {user} = useAppSelector(state=> state.user)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
   const location = useLocation()
@@ -36,6 +38,14 @@ export const Header: FC<HeaderPropsType> = () => {
                    </Link>
               }
             </div>
+           {user?.isAdmin && <div className="headerCart">
+             {location.pathname !== '/cart' &&
+               <Link to="/create" className="button buttonCart">
+                 Добавить <img src={uploadPizza} alt="" width={25}/>
+               </Link>
+             }
+           </div>}
+
            <ProfileContainer />
          </div>
 

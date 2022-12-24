@@ -60,7 +60,8 @@ export const FoodConfig: FC<IFoodConfigProps> = (
         <div className={styles.favoritesAndViews}>
           <span className={styles.favAndViews} onClick={onClickAddToFavorites}>
            <FavoriteSVG styles={styles.svg}/>
-            {favorites}
+            <span>{favorites}</span>
+
           </span>
           <span className={styles.favAndViews}>
             <ViewsSVG styles={styles.svg}/>

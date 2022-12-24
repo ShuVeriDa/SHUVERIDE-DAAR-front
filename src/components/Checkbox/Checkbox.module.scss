@@ -1,0 +1,16 @@
+.checkbox {
+  .title {
+    color: #1a73e8;
+    font-weight: bold;
+  }
+  .list {
+    display: flex;
+    justify-content: space-around;
+
+
+
+    .input {
+      margin-left: 5px;
+    }
+  }
+}

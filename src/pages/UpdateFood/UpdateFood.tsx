@@ -12,15 +12,18 @@ import {useNavigate, useNavigation, useParams} from "react-router-dom";
 import {Select} from "../../components/Select/Select";
 import {foodCategories, foodNameTypes, foodOptions, foodValueSizes, foodValueTypes} from "../../utils/helpers";
 import {Checkbox} from "../../components/Checkbox/Checkbox";
+import {HandleChangeImage} from "../../utils/HandleChangeImage";
 
 interface IAuthProps {
 }
 
 export const UpdateFood: FC<IAuthProps> = () => {
+
   const {id} = useParams()
   const {foods} = useAppSelector(state => state.food)
   const currentFood = foods.find(obj => obj.id === id)
 
+  const [imageUrl, setImageUrl] = useState('')
   const [titleFood, setTitleFood] = useState<string | undefined>(currentFood?.title)
   const [price, setPrice] = useState<number | undefined>(currentFood?.price)
   const [kindFood, setKindFood] = useState(currentFood?.kind.toString())
@@ -42,7 +45,7 @@ export const UpdateFood: FC<IAuthProps> = () => {
       data: {
         ...data,
         title: titleFood!,
-        imageUrl: 'https://pictures1.apteka-april.ru/products/232513/800/cd24c0d394a08e99506bc17796cc050b.webp',
+        imageUrl: imageUrl,
         price: Number(price),
         kind: Number(kindFood),
         category: Number(data.category),
@@ -64,6 +67,10 @@ export const UpdateFood: FC<IAuthProps> = () => {
 
   const onClickCategoryFood = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategoryFood(e.currentTarget.value)
+  }
+
+  const handleChangeImage =  (e: ChangeEvent<HTMLInputElement>) => {
+    HandleChangeImage(e, setImageUrl, 'food')
   }
 
   console.log(kindFood)
@@ -95,12 +102,16 @@ export const UpdateFood: FC<IAuthProps> = () => {
                  error={formState.errors.price}
                  classes={styles.price}
           />
+
+          <input type="file" {...register('imageUrl', {required: true})} onChange={handleChangeImage}/>
+
           <Select title={"Выберите род еды:"}
                   type={"kind"}
                   value={kindFood}
                   options={foodOptions}
                   register={register}
-                  onChange={onClickKindFood}/>
+                  onChange={onClickKindFood}
+          />
           <Select title={"Выберите категорию:"}
                   type={"category"}
                   value={categoryFood}
@@ -119,7 +130,8 @@ export const UpdateFood: FC<IAuthProps> = () => {
                         // onChangeSome={setTypeFood}
               />
               <Checkbox title={'Выберите размер пиццы: '}
-                        name={foodValueSizes} type={'sizes'}
+                        name={foodValueSizes}
+                        type={'sizes'}
                         options={foodValueSizes}
                         register={register}
                         // value={sizeFood!}
@@ -139,8 +151,7 @@ export const UpdateFood: FC<IAuthProps> = () => {
           }
 
           <div className={styles.buttons}>
-            <SubmitButton
-              title={"Добавить"}
+            <SubmitButton title={"Добавить"}
             />
           </div>
         </form>

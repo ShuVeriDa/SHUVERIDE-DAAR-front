@@ -8,6 +8,16 @@
     .favAndViews {
       display: flex;
       align-self: center;
+
+      &:hover {
+        cursor: pointer;
+        span {
+          text-decoration: underline;
+          font-weight: bold;
+
+        }
+      }
+
       .svg {
         margin-right: 2px;
         color: #282c34;
