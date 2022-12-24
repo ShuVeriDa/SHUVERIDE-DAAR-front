@@ -50,6 +50,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
       dispatch(RemoveFoodTC(id))
     }
   }
+  const image = imageUrl.includes('uploads') ? process.env.REACT_APP_URL + imageUrl.replace('/uploads', 'uploads') : imageUrl
 
   return (
     <div className='pizzaBlockWrapper'>
@@ -65,7 +66,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
 
         <Link to={`/food/${id}`}>
           <img className="pizzaBlockImage"
-               src={imageUrl}
+               src={image}
                alt="Pizza"
 
           />

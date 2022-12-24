@@ -6,12 +6,11 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {useDispatch} from "react-redux";
 import {AuthInputType} from "../../redux/types";
-import {loginTC, registerTC, uploadImageUserTC} from "../../redux/user/user.actions";
+import {loginTC, registerTC} from "../../redux/user/user.actions";
 import {useNavigate} from "react-router-dom";
 import {Register} from "../../components/Register/Register";
 import {SubmitButton} from "../../components/Buttons/SubmitButton/SubmitButton";
-import {AuthAPI} from "../../api/authAPI";
-import {UploadFileAPI} from "../../api/uploadFileAPI";
+import {HandleChangeImage} from "../../utils/HandleChangeImage";
 
 interface IAuthProps {
 }
@@ -51,21 +50,12 @@ export const Auth: FC<IAuthProps> = () => {
     setType(type)
   }
 
-  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-   const files = event.target.files
-    if(!files?.length) return
 
-    const formData = new FormData()
-    formData.append('file', files[0])
-    try {
-       const res = await UploadFileAPI.uploadFile(formData, 'user')
-        setImageUrl(res.data[0].url)
-    } catch (error) {
-      console.log(error)
-    }
-     // dispatch(uploadImageUserTC({file: formData, folder: 'user'}))
+  const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    HandleChangeImage(e, setImageUrl, 'user')
   }
+
+
 
   return (
     <div className={styles.auth}>
@@ -83,7 +73,7 @@ export const Auth: FC<IAuthProps> = () => {
                         isPasswordRequired
                         status={status}
                         onSelectType={onSelectType}
-                        handleChangeImage={handleChangeImage}
+                        handleChangeImage={changeImage}
 
             />
           }

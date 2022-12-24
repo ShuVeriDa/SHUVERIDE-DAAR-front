@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatchType, useAppSelector} from "../../redux/store";
 import {useParams} from "react-router-dom";
@@ -48,11 +48,13 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
     return <>Loading...</>
   }
 
+  const image = food.imageUrl.includes('uploads') ? process.env.REACT_APP_URL + food.imageUrl.replace('/uploads', 'uploads') : food.imageUrl
+
   return (
     <div className='container'>
       <div className={styles.wrapper}>
         <div className={styles.imgBlock}>
-          <img src={food.imageUrl} className={styles.image} alt=""/>
+          <img src={image} className={styles.image} alt=""/>
         </div>
         <div className={styles.foodConfigBlock} style={{position: "relative",}}>
           <div className={styles.foodConfigBlockContainer}>

@@ -12,11 +12,13 @@ import {useNavigate} from "react-router-dom";
 import {Select} from "../../components/Select/Select";
 import {foodCategories, foodNameTypes, foodOptions, foodValueSizes, foodValueTypes} from "../../utils/helpers";
 import {Checkbox} from "../../components/Checkbox/Checkbox";
+import {HandleChangeImage} from "../../utils/HandleChangeImage";
 
 interface IAuthProps {
 }
 
 export const CreateFood: FC<IAuthProps> = () => {
+  const [imageUrl, setImageUrl] = useState('')
   const [kindFood, setKindFood] = useState('0')
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatchType>()
@@ -26,7 +28,7 @@ export const CreateFood: FC<IAuthProps> = () => {
   const onSubmit: SubmitHandler<CreateFoodType> = (data) => {
     dispatch(CreateFoodTC({
       ...data,
-      imageUrl: 'https://pictures1.apteka-april.ru/products/232513/800/cd24c0d394a08e99506bc17796cc050b.webp',
+      imageUrl: imageUrl,
       price: Number(data.price),
       kind: Number(data.kind),
       category: Number(data.category),
@@ -39,6 +41,10 @@ export const CreateFood: FC<IAuthProps> = () => {
 
     navigate('/')
     reset()
+  }
+
+  const handleChangeImage =  (e: ChangeEvent<HTMLInputElement>) => {
+    HandleChangeImage(e, setImageUrl, 'food')
   }
 
   const onClickKindFood = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -69,6 +75,8 @@ export const CreateFood: FC<IAuthProps> = () => {
                  error={formState.errors.price}
                  classes={styles.price}
           />
+
+          <input type="file" {...register('imageUrl', {required: true})} onChange={handleChangeImage}/>
           <Select title={"Выберите род еды:"} type={"kind"} options={foodOptions} register={register} onChange={onClickKindFood}/>
           <Select title={"Выберите категорию:"} type={"category"} options={foodCategories} register={register} />
           {kindFood === '0' ?
