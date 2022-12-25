@@ -75,6 +75,7 @@ export const CommentSlice = createSlice({
       .addCase(RemoveCommentTC.fulfilled, (state, action) => {
         state.status = StatusEnum.SUCCESS
         state.comments = state.comments.filter(obj => obj.id !== action.payload.id)
+
       })
       .addCase(RemoveCommentTC.rejected, (state) => {
         state.status = StatusEnum.ERROR

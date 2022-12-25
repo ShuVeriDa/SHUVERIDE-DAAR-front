@@ -27,12 +27,14 @@ export const CartItemBlock: FC<CartItemPropsType & CartItemType> = (
     }
   }
 
+  const image = imageUrl.includes('uploads') ? process.env.REACT_APP_URL + imageUrl.replace('/uploads', 'uploads') : imageUrl
+
   return (
     <div className="cartItem">
       <div className="cartItemImg">
         <img
           className="pizzaBlockImage"
-          src={imageUrl}
+          src={image}
           alt="Pizza"
         />
       </div>

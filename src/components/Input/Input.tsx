@@ -1,4 +1,4 @@
-import {ChangeEvent, forwardRef, InputHTMLAttributes} from 'react';
+import {ChangeEvent, forwardRef, InputHTMLAttributes, useState} from 'react';
 
 import styles from './Input.module.scss';
 import {FieldError} from "react-hook-form";
@@ -21,15 +21,19 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
       value, step, classes, onChangeSome, ...rest
     }, ref
   ) => {
+
+    const [fieldValue, setFieldValue] = useState(value)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       if (onChangeSome) {
         onChangeSome(e.currentTarget.value)
       }
+
+      setFieldValue(e.currentTarget.value)
     }
 
     return (
       <div className={cn(styles.input, classes)}>
-        <input className={cn(value ? styles.isValue : '')} type={type} ref={ref} value={value} {...rest} onChange={onChangeHandler} step={step}/>
+        <input className={cn(fieldValue ? styles.isValue : '')} type={type} ref={ref} value={fieldValue} {...rest} onChange={onChangeHandler} step={step}/>
         <label>{title}</label>
         {error && error.type && <div className={styles.error}>{error.message}</div>}
       </div>

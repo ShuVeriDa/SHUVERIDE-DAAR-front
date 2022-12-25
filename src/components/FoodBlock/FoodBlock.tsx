@@ -36,7 +36,7 @@ export const FoodBlock: FC<FoodBlockPropsType & FoodResponseType> = (
       id,
       count: 0,
       type: !liters ? typesName[activeType] : undefined,
-      size: sizes![activeSize],
+      size: !liters ? sizes![activeSize] : undefined,
       price,
       imageUrl,
       title,

@@ -29,7 +29,7 @@ export const FoodSlice = createSlice({
         state.foods = []
       })
 
-    //Fetch one food by id
+      //Fetch one food by id
       .addCase(FetchOneFoodTC.pending, state => {
         state.status = StatusEnum.LOADING
         state.food = null
@@ -83,8 +83,8 @@ export const FoodSlice = createSlice({
         state.status = StatusEnum.ERROR
       })
 
-    //add to favorites
-      .addCase(AddToFavoritesTC.pending, state =>  {
+      //add to favorites
+      .addCase(AddToFavoritesTC.pending, state => {
         state.status = StatusEnum.LOADING
       })
       .addCase(AddToFavoritesTC.fulfilled, (state, action) => {
@@ -95,7 +95,7 @@ export const FoodSlice = createSlice({
           food.favorites = action.payload.favorites
         }
       })
-      .addCase(AddToFavoritesTC.rejected, state =>  {
+      .addCase(AddToFavoritesTC.rejected, state => {
         state.status = StatusEnum.ERROR
       })
   }
