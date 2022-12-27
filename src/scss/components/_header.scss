@@ -10,11 +10,39 @@
       align-items: center;
       justify-content: space-between;
 
+      @media (max-width: 1400px) {
+
+      }
+
+      @media (max-width: 1230px) {
+         .headerCart {
+           a {
+              padding: 12px 8px;
+           }
+         }
+      }
+
+
+      @media (max-width: 1140px) {
+         flex-direction: column;
+
+         .headerCart{
+            margin-top: 10px;
+            a {
+               padding: 12px 25px;
+            }
+
+         }
+      }
+
       @media (max-width: 645px) {
          flex-direction: column;
 
-         .headerCart {
-            margin-top: 20px;
+         .headerCart{
+            margin-top: 10px;
+            a {
+               padding: 12px 25px;
+            }
          }
       }
    }
