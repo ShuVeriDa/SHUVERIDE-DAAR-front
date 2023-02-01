@@ -32,6 +32,7 @@ export const EditCommentsTC = createAsyncThunk<CommentsResponseType, UpdateComme
 export const RemoveCommentTC = createAsyncThunk<CommentsResponseType, string>('comments/removeComment', async (id) => {
   try {
     const res = await commentAPI.removeComment(id)
+
     return res.data
   } catch (error) {
     console.warn(error)

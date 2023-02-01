@@ -26,8 +26,6 @@ export const Checkbox: FC<ICheckboxProps> = (
     }
   }
 
-  console.log(value)
-
   return (
     <div className={styles.checkbox}>
       <span className={styles.title}>{title} </span>

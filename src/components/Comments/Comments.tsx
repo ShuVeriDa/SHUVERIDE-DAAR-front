@@ -26,8 +26,6 @@ export const Comments: FC<CommentsPropsType> = ({foodId}) => {
   const authorizedUserId = useAppSelector(state => state.user.user?.id)
   const isAdmin = useAppSelector(state => state.user.user?.isAdmin)
 
-  console.log('valueComment :' + valueComment)
-
   useEffect(() => {
     dispatch(FetchCommentsTC(foodId))
 

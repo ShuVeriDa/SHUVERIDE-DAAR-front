@@ -34,11 +34,9 @@ export const Auth: FC<IAuthProps> = () => {
         isAdmin: JSON.parse(String(data.isAdmin))
       }))
 
-    console.log(data.avatar)
     reset()
   }
 
-  console.log(imageUrl, "imageUrl")
 
   useEffect(() => {
     if (user) {

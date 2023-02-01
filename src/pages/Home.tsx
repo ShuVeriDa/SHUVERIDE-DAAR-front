@@ -31,7 +31,6 @@ export const Home: FC<HomePropsType> = () => {
     const search = searchValue ? `title=${searchValue}` : ''
     const kind = categoryId > 0 ? '0' : ''
 
-    console.log(sortBy)
     dispatch(FetchFoodsTC({
       title: search,
       kind: kind,
@@ -62,8 +61,6 @@ export const Home: FC<HomePropsType> = () => {
   useEffect(() => {
     getPizzas()
   }, [categoryId, sort.sortProperty, searchValue])
-
-  console.log(foods)
 
   const array = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
 

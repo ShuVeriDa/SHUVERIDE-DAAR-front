@@ -35,8 +35,6 @@ export const UpdateFood: FC<IAuthProps> = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatchType>()
 
-  console.log(currentFood, price, titleFood, "currentFood")
-
   const {register, handleSubmit, formState, reset} = useForm<CreateFoodType>({mode: "onChange"})
 
   const onSubmit: SubmitHandler<CreateFoodType> = (data) => {
@@ -55,8 +53,6 @@ export const UpdateFood: FC<IAuthProps> = () => {
       }
     }))
 
-    console.log(data)
-
     navigate('/')
     reset()
   }
@@ -72,8 +68,6 @@ export const UpdateFood: FC<IAuthProps> = () => {
   const handleChangeImage =  (e: ChangeEvent<HTMLInputElement>) => {
     HandleChangeImage(e, setImageUrl, 'food')
   }
-
-  console.log(kindFood)
 
   return (
     <div className={styles.create}>

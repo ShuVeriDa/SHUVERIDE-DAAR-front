@@ -37,8 +37,6 @@ export const CreateFood: FC<IAuthProps> = () => {
       liters: Number(data.liters)
     }))
 
-    console.log(data)
-
     navigate('/')
     reset()
   }
@@ -50,8 +48,6 @@ export const CreateFood: FC<IAuthProps> = () => {
   const onClickKindFood = (e: ChangeEvent<HTMLSelectElement>) => {
     setKindFood(e.currentTarget.value)
   }
-
-  console.log(kindFood)
 
   return (
     <div className={styles.create}>

@@ -36,8 +36,6 @@ export const FullPizza: FC<FullPizzaPropsType> = () => {
     dispatch(addItem(itemCart))
   }
 
-  console.log(food)
-
 
   useEffect(() => {
     dispatch(FetchOneFoodTC(id!))
