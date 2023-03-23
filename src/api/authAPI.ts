@@ -7,7 +7,7 @@ import {getContentType} from "./api.helpers";
 
 export const AuthAPI = {
   register: async (data: RegisterType) => {
-    const res = await instance.post<IAuthResponse>(`auth/register`, data)
+    const res = await axiosClassic.post<IAuthResponse>(`auth/register`, data)
 
     if (res.data.accessToken) {
       saveToStorage(res.data)

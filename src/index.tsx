@@ -10,17 +10,17 @@ import {store, persistor} from "./redux/store";
 
 
 const root = ReactDOM.createRoot(
-   document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
-  root.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor} >
+root.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <App/>
-        </PersistGate>
-      </Provider>
-    </BrowserRouter>
-  );
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
