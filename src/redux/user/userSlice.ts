@@ -44,7 +44,7 @@ export const userSlice = createSlice({
 
       /*logout*/
       .addCase(logoutTC.fulfilled, (state, action) => {
-        state.status = StatusEnum.ERROR
+        state.status = StatusEnum.SUCCESS
         state.user = null
       })
 
