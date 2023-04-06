@@ -2,7 +2,6 @@ import {FC} from 'react';
 
 import styles from './Login.module.scss';
 import {Input} from "../Input/Input";
-import {SubmitButton} from "../Buttons/SubmitButton/SubmitButton";
 import {FormState, UseFormRegister} from "react-hook-form";
 import {validEmail} from "../../utils/regex";
 import {StatusEnum} from "../../redux/types";

@@ -1,15 +1,12 @@
-import {ChangeEvent, FC, useState} from 'react';
+import {ChangeEvent, FC} from 'react';
 
 import styles from './Register.module.scss';
 import {Input} from "../Input/Input";
-import {SubmitButton} from "../Buttons/SubmitButton/SubmitButton";
 import {StatusEnum} from "../../redux/types";
 import {validEmail} from "../../utils/regex";
 import {FormState, UseFormRegister} from "react-hook-form";
-import {uploadImageUserTC} from "../../redux/user/user.actions";
 import {useDispatch} from "react-redux";
 import {AppDispatchType} from "../../redux/store";
-import {UploadFileAPI} from "../../api/uploadFileAPI";
 
 interface IRegisterProps {
   register: UseFormRegister<any>

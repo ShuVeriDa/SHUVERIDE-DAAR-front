@@ -1,5 +1,5 @@
-import {lazy, Suspense} from "react";
-import {Route, Routes} from "react-router-dom";
+import {lazy, Suspense, useEffect} from "react";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Loadable from "react-loadable";
 
 import './scss/app.scss';
@@ -9,6 +9,10 @@ import {Cart} from "./pages/Cart";
 import {Auth} from "./pages/Auth/Auth";
 import {CreateFood} from "./pages/CreateFood/CreateFood";
 import {UpdateFood} from "./pages/UpdateFood/UpdateFood";
+import {useDispatch} from "react-redux";
+import {checkAuthTC, logoutTC} from "./redux/user/user.actions";
+import {AppDispatchType, useAppSelector} from "./redux/store";
+import Cookies from "js-cookie";
 
 
 // const Cart = Loadable({
@@ -28,6 +32,28 @@ const NotFound = lazy(() => import(/* webpackChunkName: "NotFound"*/ './pages/No
 )
 
 function App() {
+
+  const navigate = useNavigate()
+  const {user} = useAppSelector(state => state.user)
+
+  const dispatch : AppDispatchType= useDispatch()
+
+  useEffect(() => {
+    const accessToken = Cookies.get('accessToken')
+    if (accessToken) dispatch(checkAuthTC())
+  }, [])
+
+  useEffect(() => {
+    const refreshToken = Cookies.get('refreshToken')
+    if (!refreshToken && user) dispatch(logoutTC())
+  }, [])
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth')
+    }
+  }, [user])
+
   return (
     <Routes>
       <Route path={'/auth'} element={<Auth/>}/>
